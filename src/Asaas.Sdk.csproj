@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Version>1.0.3</Version>
+    <Authors>Integrações Asaas</Authors>
+    <Company>Asaas</Company>
+    <Description>A .NET 8 SDK for Asaas Payment Gateway API</Description>
+    <PackageProjectUrl>https://asaas.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/asaasdev/asaas-api-sdk-java</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>asaas;payment;gateway;api;sdk</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <PackageReference Include="Polly" Version="8.4.2" />
+    <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>
