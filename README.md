@@ -1,4 +1,4 @@
-# Asaas .NET SDK 1.0.3
+# Asaas .NET SDK 1.0.0
 
 Welcome to the official Asaas API SDK for .NET 8 documentation.
 
@@ -7,7 +7,7 @@ This guide will help you get started with integrating and using the Asaas SDK in
 ## Versions
 
 - API version: `3.0.0`
-- SDK version: `1.0.3`
+- SDK version: `1.0.0`
 - .NET version: `8.0`
 
 ## About the API
