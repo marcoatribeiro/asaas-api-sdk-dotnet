@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		GETTING_STARTED.md = GETTING_STARTED.md
 		IMPLEMENTATION_SUMMARY.md = IMPLEMENTATION_SUMMARY.md
 		PROJECT_SUMMARY.md = PROJECT_SUMMARY.md
+		.github\workflows\publish.yml = .github\workflows\publish.yml
 		QUICK_REFERENCE.md = QUICK_REFERENCE.md
 		README.md = README.md
 		USAGE_EXAMPLES.md = USAGE_EXAMPLES.md
