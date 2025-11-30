@@ -3,10 +3,16 @@ using System.Text.Json.Serialization;
 namespace Asaas.Sdk.Models;
 
 /// <summary>
-/// Webhook configuration save request
+/// Webhook configuration response
 /// </summary>
-public class WebhookConfigSaveRequestDto
+public class WebhookConfigGetResponseDto
 {
+    /// <summary>
+    /// Unique Webhook Identifier
+    /// </summary>
+    [JsonPropertyName("id")]
+    public string? Id { get; set; }
+
     /// <summary>
     /// Webhook name
     /// </summary>
@@ -44,10 +50,10 @@ public class WebhookConfigSaveRequestDto
     public long? ApiVersion { get; set; }
 
     /// <summary>
-    /// Webhook authentication token
+    /// Indicates whether an authentication token is registered for the webhook
     /// </summary>
-    [JsonPropertyName("authToken")]
-    public string? AuthToken { get; set; }
+    [JsonPropertyName("hasAuthToken")]
+    public bool? HasAuthToken { get; set; }
 
     /// <summary>
     /// Sequential (SEQUENTIALLY) or non-sequential (NON_SEQUENTIALLY)

@@ -3,9 +3,9 @@ using System.Text.Json.Serialization;
 namespace Asaas.Sdk.Models;
 
 /// <summary>
-/// Webhook configuration save request
+/// Webhook configuration update request
 /// </summary>
-public class WebhookConfigSaveRequestDto
+public class WebhookConfigUpdateRequestDto
 {
     /// <summary>
     /// Webhook name
@@ -14,16 +14,16 @@ public class WebhookConfigSaveRequestDto
     public string? Name { get; set; }
 
     /// <summary>
-    /// Webhook URL
+    /// Event destination URL
     /// </summary>
     [JsonPropertyName("url")]
     public string? Url { get; set; }
 
     /// <summary>
-    /// Email that will receive notifications about the Webhook
+    /// Sequential (SEQUENTIALLY) or non-sequential (NON_SEQUENTIALLY)
     /// </summary>
-    [JsonPropertyName("email")]
-    public string? Email { get; set; }
+    [JsonPropertyName("sendType")]
+    public string? SendType { get; set; }
 
     /// <summary>
     /// Set whether the Webhook is active
@@ -38,22 +38,10 @@ public class WebhookConfigSaveRequestDto
     public bool? Interrupted { get; set; }
 
     /// <summary>
-    /// API Version
-    /// </summary>
-    [JsonPropertyName("apiVersion")]
-    public long? ApiVersion { get; set; }
-
-    /// <summary>
     /// Webhook authentication token
     /// </summary>
     [JsonPropertyName("authToken")]
     public string? AuthToken { get; set; }
-
-    /// <summary>
-    /// Sequential (SEQUENTIALLY) or non-sequential (NON_SEQUENTIALLY)
-    /// </summary>
-    [JsonPropertyName("sendType")]
-    public string? SendType { get; set; }
 
     /// <summary>
     /// List of events this Webhook will observe
