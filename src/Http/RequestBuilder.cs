@@ -64,6 +64,17 @@ public class RequestBuilder
     }
 
     /// <summary>
+    /// Set the request body with JSON content
+    /// </summary>
+    /// <param name="content">Request body object to be serialized as JSON</param>
+    /// <returns>This builder instance</returns>
+    public RequestBuilder SetJsonContent(object content)
+    {
+        _body = content;
+        return this;
+    }
+
+    /// <summary>
     /// Build the HTTP request message
     /// </summary>
     /// <param name="baseUrl">Base URL for the request</param>

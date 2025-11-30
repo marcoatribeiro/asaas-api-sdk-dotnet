@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<PackageId>TorinoInfo.AsaasSdk</PackageId>
-		<PackageVersion>1.0.1</PackageVersion>
-		<Version>1.0.1</Version>
+		<PackageVersion>1.0.2</PackageVersion>
+		<Version>1.0.2</Version>
 		<Authors>Marco Ribeiro</Authors>
 		<Company>Torino Informática</Company>
 		<Description>A .NET 8 SDK for Asaas Payment Gateway API</Description>
