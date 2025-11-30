@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<PackageId>TorinoInfo.AsaasSdk</PackageId>
-		<PackageVersion>1.0.3</PackageVersion>
-		<Version>1.0.3</Version>
+		<PackageVersion>1.0.4</PackageVersion>
+		<Version>1.0.4</Version>
 		<Authors>Marco Ribeiro</Authors>
 		<Company>Torino Informática</Company>
 		<Description>A .NET 8 SDK for Asaas Payment Gateway API</Description>
@@ -19,6 +19,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591;CS1584</NoWarn>
 		<PackageReleaseNotes>
+			* 1.0.4 - Implemented missing properties for Payment and Customer get responses.
 			* 1.0.3 - Implemented missing PaymentService methods.
 			* 1.0.2 - Implemented missing CustomerService methods and refactored Dto classes.
 			* 1.0.1 - Fixed build issues and updated Readme.
