@@ -8,7 +8,7 @@ public class AsaasSdkConfig
     /// <summary>
     /// User agent string for HTTP requests
     /// </summary>
-    public string UserAgent { get; set; } = "asaas-sdk-dotnet/1.0.3";
+    public string UserAgent { get; set; } = "asaas-sdk-dotnet/1.0.9";
 
     /// <summary>
     /// Base URL for API requests
@@ -36,6 +36,6 @@ public class AsaasSdkConfig
     /// <param name="environment">The environment to use</param>
     public void SetEnvironment(Asaas.Sdk.Http.Environment environment)
     {
-        BaseUrl = Asaas.Sdk.Http.EnvironmentExtensions.GetUrl(environment);
+        BaseUrl = Http.EnvironmentExtensions.GetUrl(environment);
     }
 }

@@ -3,6 +3,7 @@ using Asaas.Sdk.Http;
 using Asaas.Sdk.Services;
 using Polly;
 using Polly.Extensions.Http;
+using Environment = Asaas.Sdk.Http.Environment;
 
 namespace Asaas.Sdk;
 
@@ -205,10 +206,14 @@ public class AsaasSdk : IDisposable
             );
 
         // Create HTTP client with handlers
-        var handler = new DefaultHeadersHandler(config);
-        
+        var handler = new DefaultHeadersHandler(config)
+        {
+            InnerHandler = new HttpClientHandler()
+        };
+
         _httpClient = new HttpClient(handler)
         {
+            BaseAddress = new Uri(config.BaseUrl ?? Environment.Default.GetUrl()),
             Timeout = config.Timeout
         };
 
