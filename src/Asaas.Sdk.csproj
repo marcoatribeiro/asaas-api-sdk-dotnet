@@ -19,7 +19,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591;CS1584</NoWarn>
 		<PackageReleaseNotes>
-			* 1.0.8 - Implemented missing DTOs related to Transfer services.
+			* 1.0.8 - Implemented missing DTOs related to Transfer and Finance services.
 			* 1.0.7 - Implemented missing DTOs related to Webhook services.
 			* 1.0.6 - Refactored Subaccount service to use newly created DTOs.
 			* 1.0.5 - Implemented missing DTOs related to Account services.
