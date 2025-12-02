@@ -35,7 +35,7 @@ public class DefaultHeadersHandler : DelegatingHandler
             var headerName = _config.ApiKeyAuthConfig.ApiKeyHeader;
             if (!request.Headers.Contains(headerName))
             {
-                request.Headers.Add(headerName, $"${_config.ApiKeyAuthConfig.ApiKey}");
+                request.Headers.Add(headerName, _config.ApiKeyAuthConfig.ApiKey);
             }
         }
 
