@@ -94,7 +94,7 @@ public abstract class BaseService
     /// <param name="response">HTTP response</param>
     /// <param name="content">Response content</param>
     /// <returns>Error message string</returns>
-    private string ExtractErrorMessage(HttpResponseMessage response, string? content)
+    private static string ExtractErrorMessage(HttpResponseMessage response, string? content)
     {
         if (!string.IsNullOrEmpty(content))
         {

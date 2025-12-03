@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<PackageId>TorinoInfo.AsaasSdk</PackageId>
-		<PackageVersion>1.1.0</PackageVersion>
-		<Version>1.1.0</Version>
+		<PackageVersion>1.1.1</PackageVersion>
+		<Version>1.1.1</Version>
 		<Authors>Marco Ribeiro</Authors>
 		<Company>Torino Informática</Company>
 		<Description>A .NET 8 SDK for Asaas Payment Gateway API</Description>
@@ -19,6 +19,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591;CS1584</NoWarn>
 		<PackageReleaseNotes>
+			* 1.1.1 - Added missing DTOs for a few services.
 			* 1.1.0 - Fixed DefaultHeadersHandler ApiKey assignment.
 			* 1.0.9 - Fixed DefaultHeadersHandler initialization issue.
 			* 1.0.8 - Implemented missing DTOs related to Transfer and Finance services.

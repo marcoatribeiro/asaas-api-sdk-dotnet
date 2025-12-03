@@ -1,5 +1,6 @@
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Http;
+using Asaas.Sdk.Models;
 
 namespace Asaas.Sdk.Services;
 
@@ -14,55 +15,55 @@ public class SandboxActionsService : BaseService
     }
 
     /// <summary>
-    /// Simulate payment received
+    /// (Sandbox only) Simulate payment received
     /// </summary>
-    public async Task<dynamic> SimulatePaymentReceivedAsync(
+    public async Task<PaymentGetResponseDto> SimulatePaymentReceivedAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/receiveInCash");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request);
     }
 
     /// <summary>
-    /// Simulate payment confirmation
+    /// (Sandbox only) Simulate payment confirmation
     /// </summary>
-    public async Task<dynamic> SimulatePaymentConfirmationAsync(
+    public async Task<PaymentGetResponseDto> SimulatePaymentConfirmationAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/confirm");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request);
     }
 
     /// <summary>
-    /// Simulate refund
+    /// (Sandbox only) Simulate refund
     /// </summary>
-    public async Task<dynamic> SimulateRefundAsync(
+    public async Task<PaymentGetResponseDto> SimulateRefundAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/refund");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request);
     }
 
     /// <summary>
-    /// Simulate chargeback
+    /// (Sandbox only) Simulate chargeback
     /// </summary>
-    public async Task<dynamic> SimulateChargebackAsync(
+    public async Task<PaymentGetResponseDto> SimulateChargebackAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/chargeback");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request);
     }
 
     /// <summary>
-    /// Simulate PIX transaction received
+    /// (Sandbox only) Simulate PIX transaction received
     /// </summary>
     public async Task<dynamic> SimulatePixTransactionReceivedAsync(
         object transaction,
@@ -76,14 +77,26 @@ public class SandboxActionsService : BaseService
     }
 
     /// <summary>
-    /// Simulate transfer done
+    /// (Sandbox only) Simulate transfer done
     /// </summary>
-    public async Task<dynamic> SimulateTransferDoneAsync(
+    public async Task<TransferGetResponseDto> SimulateTransferDoneAsync(
         string transferId,
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/transfers/{transferId}/done");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<TransferGetResponseDto>(request);
+    }
+
+    /// <summary>
+    /// (Sandbox only) Force charge overdue
+    /// </summary>
+    public async Task<PaymentGetResponseDto> ForceExpireAsync(
+        string paymentId,
+        CancellationToken cancellationToken = default)
+    {
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/overdue");
+        var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PaymentGetResponseDto>(request);
     }
 }

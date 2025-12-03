@@ -1,5 +1,6 @@
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Http;
+using Asaas.Sdk.Models;
 
 namespace Asaas.Sdk.Services;
 
@@ -16,48 +17,48 @@ public class AccountInfoService : BaseService
     /// <summary>
     /// Get account information
     /// </summary>
-    public async Task<dynamic> GetAccountInfoAsync(
+    public async Task<AccountInfoGetResponseDto> GetAccountInfoAsync(
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<AccountInfoGetResponseDto>(request);
     }
 
     /// <summary>
     /// Get commercial info
     /// </summary>
-    public async Task<dynamic> GetCommercialInfoAsync(
+    public async Task<AccountInfoGetResponseDto> GetCommercialInfoAsync(
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount/commercialInfo");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<AccountInfoGetResponseDto>(request);
     }
 
     /// <summary>
     /// Update account information
     /// </summary>
-    public async Task<dynamic> UpdateAccountInfoAsync(
-        object accountInfo,
+    public async Task<AccountInfoGetResponseDto> UpdateAccountInfoAsync(
+        AccountInfoSaveRequestDto accountInfo,
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, "v3/myAccount")
             .SetBody(accountInfo);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<AccountInfoGetResponseDto>(request);
     }
 
     /// <summary>
     /// Get account status
     /// </summary>
-    public async Task<dynamic> GetAccountStatusAsync(
+    public async Task<MyAccountGetStatusResponseDto> GetAccountStatusAsync(
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount/status");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<MyAccountGetStatusResponseDto>(request);
     }
 
     /// <summary>
@@ -74,25 +75,25 @@ public class AccountInfoService : BaseService
     /// <summary>
     /// Get payment escrow config
     /// </summary>
-    public async Task<dynamic> GetPaymentEscrowConfigAsync(
+    public async Task<AccountPaymentEscrowConfigDto> GetPaymentEscrowConfigAsync(
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount/paymentEscrowConfig");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<AccountPaymentEscrowConfigDto>(request);
     }
 
     /// <summary>
     /// Update payment escrow config
     /// </summary>
-    public async Task<dynamic> UpdatePaymentEscrowConfigAsync(
-        object config,
+    public async Task<AccountPaymentEscrowConfigDto> UpdatePaymentEscrowConfigAsync(
+        AccountSaveOrUpdatePaymentEscrowConfigRequestDto config,
         CancellationToken cancellationToken = default)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, "v3/myAccount/paymentEscrowConfig")
             .SetBody(config);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<AccountPaymentEscrowConfigDto>(request);
     }
 }
