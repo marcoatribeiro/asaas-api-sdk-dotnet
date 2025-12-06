@@ -8,14 +8,20 @@ namespace Asaas.Sdk.Models;
 public class MunicipalServiceDto
 {
     /// <summary>
-    /// Service code
+    /// Unique service identifier
     /// </summary>
-    [JsonPropertyName("code")]
-    public string? Code { get; set; }
+    [JsonPropertyName("id")]
+    public string? Id { get; set; }
 
     /// <summary>
     /// Service description
     /// </summary>
     [JsonPropertyName("description")]
     public string? Description { get; set; }
+
+    /// <summary>
+    /// ISS percentage rate
+    /// </summary>
+    [JsonPropertyName("issTax")]
+    public double? IssTax { get; set; }
 }
