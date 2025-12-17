@@ -44,10 +44,10 @@ public class InvoiceGetResponseDto
     public string? Installment { get; set; }
 
     /// <summary>
-    /// Invoice type
+    /// Invoice type (usually NFS-e)
     /// </summary>
     [JsonPropertyName("type")]
-    public InvoiceType? Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// Description of the current status of the invoice

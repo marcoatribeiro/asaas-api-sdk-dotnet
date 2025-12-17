@@ -1,4 +1,4 @@
-# Asaas .NET SDK 1.1.4
+# Asaas .NET SDK 1.1.5
 
 Welcome to the official Asaas API SDK for .NET 8 documentation.
 
@@ -7,7 +7,7 @@ This guide will help you get started with integrating and using the Asaas SDK in
 ## Versions
 
 - API version: `3.0.0`
-- SDK version: `1.1.4`
+- SDK version: `1.1.5`
 - .NET version: `8.0`
 
 ## About the API
@@ -40,13 +40,13 @@ This SDK is compatible with: `.NET 8.0` or higher
 ### Using .NET CLI
 
 ```bash
-dotnet add package TorinoInfo.AsaasSdk --version 1.1.4
+dotnet add package TorinoInfo.AsaasSdk --version 1.1.5
 ```
 
 ### Using Package Manager Console
 
 ```powershell
-Install-Package TorinoInfo.AsaasSdk -Version 1.1.4
+Install-Package TorinoInfo.AsaasSdk -Version 1.1.5
 ```
 
 ### Using PackageReference
@@ -54,7 +54,7 @@ Install-Package TorinoInfo.AsaasSdk -Version 1.1.4
 Add the following to your `.csproj` file:
 
 ```xml
-<PackageReference Include="TorinoInfo.AsaasSdk" Version="1.1.4" />
+<PackageReference Include="TorinoInfo.AsaasSdk" Version="1.1.5" />
 ```
 
 ## Authentication
@@ -236,5 +236,3 @@ The SDK includes comprehensive models that represent the data structures used in
 ## License
 
 This SDK is licensed under the MIT License.
-
-See the [LICENSE](../../LICENSE) file for more details.

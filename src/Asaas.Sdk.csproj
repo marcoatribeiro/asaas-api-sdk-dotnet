@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<PackageId>TorinoInfo.AsaasSdk</PackageId>
-		<PackageVersion>1.1.4</PackageVersion>
-		<Version>1.1.4</Version>
+		<PackageVersion>1.1.5</PackageVersion>
+		<Version>1.1.5</Version>
 		<Authors>Marco Ribeiro</Authors>
 		<Company>Torino Informática</Company>
 		<Description>A .NET 8 SDK for Asaas Payment Gateway API</Description>
@@ -19,6 +19,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591;CS1584</NoWarn>
 		<PackageReleaseNotes>
+			* 1.1.5 - Removed InvoiceType enum and switched property type to string.
 			* 1.1.4 - Fixed Payment-related DTOs.
 			* 1.1.3 - Fixed MunicipalServiceDto.
 			* 1.1.2 - Implemented missing methods in FiscalService.

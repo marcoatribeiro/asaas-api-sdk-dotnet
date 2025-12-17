@@ -8,7 +8,7 @@ public class AsaasSdkConfig
     /// <summary>
     /// User agent string for HTTP requests
     /// </summary>
-    public string UserAgent { get; set; } = "asaas-sdk-dotnet/1.1.4";
+    public string UserAgent { get; set; } = "asaas-sdk-dotnet/1.1.5";
 
     /// <summary>
     /// Base URL for API requests
