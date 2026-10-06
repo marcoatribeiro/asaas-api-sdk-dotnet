@@ -1,4 +1,4 @@
-# Asaas .NET SDK 1.1.5
+# Asaas .NET SDK 1.2.0
 
 Welcome to the official Asaas API SDK for .NET 8 documentation.
 
@@ -7,7 +7,7 @@ This guide will help you get started with integrating and using the Asaas SDK in
 ## Versions
 
 - API version: `3.0.0`
-- SDK version: `1.1.5`
+- SDK version: `1.2.0`
 - .NET version: `8.0`
 
 ## About the API
@@ -40,13 +40,13 @@ This SDK is compatible with: `.NET 8.0` or higher
 ### Using .NET CLI
 
 ```bash
-dotnet add package TorinoInfo.AsaasSdk --version 1.1.5
+dotnet add package TorinoInfo.AsaasSdk --version 1.2.0
 ```
 
 ### Using Package Manager Console
 
 ```powershell
-Install-Package TorinoInfo.AsaasSdk -Version 1.1.5
+Install-Package TorinoInfo.AsaasSdk -Version 1.2.0
 ```
 
 ### Using PackageReference
@@ -54,7 +54,7 @@ Install-Package TorinoInfo.AsaasSdk -Version 1.1.5
 Add the following to your `.csproj` file:
 
 ```xml
-<PackageReference Include="TorinoInfo.AsaasSdk" Version="1.1.5" />
+<PackageReference Include="TorinoInfo.AsaasSdk" Version="1.2.0" />
 ```
 
 ## Authentication
@@ -176,6 +176,19 @@ catch (ApiException ex)
 ```
 
 ## Services
+
+### Find subaccounts by CPF or CNPJ
+
+```csharp
+var accounts = await asaasSdk.Subaccount.ListSubaccountsAsync(
+    cpfCnpj: "11222333000181",
+    offset: 0,
+    limit: 10,
+    cancellationToken: cancellationToken);
+```
+
+The filter is optional. Existing pagination calls continue to work, and the
+original three-parameter method remains available for compiled consumers.
 
 The SDK provides comprehensive services to interact with the Asaas API:
 

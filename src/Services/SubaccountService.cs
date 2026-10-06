@@ -21,20 +21,42 @@ public class SubaccountService : BaseService
     }
 
     /// <summary>
-    /// List subaccounts with optional filters
+    /// List subaccounts with pagination
     /// </summary>
     /// <param name="offset">Offset for pagination</param>
     /// <param name="limit">Limit for pagination</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>List of subaccounts</returns>
+    public Task<AccountListResponseDto> ListSubaccountsAsync(
+        long? offset,
+        long? limit,
+        CancellationToken cancellationToken)
+    {
+        return ListSubaccountsAsync(offset, limit, cancellationToken, cpfCnpj: null);
+    }
+
+    /// <summary>
+    /// List subaccounts with optional filters
+    /// </summary>
+    /// <param name="offset">Offset for pagination</param>
+    /// <param name="limit">Limit for pagination</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <param name="cpfCnpj">Filter by the subaccount owner's CPF or CNPJ</param>
+    /// <returns>List of subaccounts</returns>
+    /// <remarks>
+    /// Use the named cpfCnpj argument to filter by CPF or CNPJ. The original
+    /// three-parameter overload is retained for existing compiled consumers.
+    /// </remarks>
     public async Task<AccountListResponseDto> ListSubaccountsAsync(
         long? offset = null,
         long? limit = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        string? cpfCnpj = null)
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/accounts")
             .AddQueryParam("offset", offset)
-            .AddQueryParam("limit", limit);
+            .AddQueryParam("limit", limit)
+            .AddQueryParam("cpfCnpj", cpfCnpj);
 
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<AccountListResponseDto>(request);
