@@ -14,8 +14,9 @@ public class AccountDocumentGetResponseDto
     public string? Id { get; set; }
 
     /// <summary>
-    /// Document approval status
+    /// Document approval status. One of <c>NOT_SENT</c>, <c>PENDING</c>, <c>APPROVED</c>, <c>REJECTED</c> or
+    /// <c>IGNORED</c>.
     /// </summary>
     [JsonPropertyName("status")]
-    public AccountDocumentStatus? Status { get; set; }
+    public string? Status { get; set; }
 }

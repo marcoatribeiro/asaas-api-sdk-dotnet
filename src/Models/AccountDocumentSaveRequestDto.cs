@@ -14,8 +14,9 @@ public class AccountDocumentSaveRequestDto
     public byte[]? DocumentFile { get; set; }
 
     /// <summary>
-    /// Document Type
+    /// Document Type. One of <c>IDENTIFICATION</c>, <c>SOCIAL_CONTRACT</c>, <c>ENTREPRENEUR_REQUIREMENT</c>,
+    /// <c>MINUTES_OF_ELECTION</c> or <c>CUSTOM</c>.
     /// </summary>
     [JsonPropertyName("type")]
-    public AccountDocumentType? Type { get; set; }
+    public string? Type { get; set; }
 }

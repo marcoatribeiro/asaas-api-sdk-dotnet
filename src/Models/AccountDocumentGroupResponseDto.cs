@@ -14,16 +14,18 @@ public class AccountDocumentGroupResponseDto
     public string? Id { get; set; }
 
     /// <summary>
-    /// Document group status
+    /// Document group status. One of <c>NOT_SENT</c>, <c>PENDING</c>, <c>APPROVED</c>, <c>REJECTED</c> or
+    /// <c>IGNORED</c>.
     /// </summary>
     [JsonPropertyName("status")]
-    public AccountDocumentStatus? Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
-    /// Type of documents
+    /// Type of documents. One of <c>IDENTIFICATION</c>, <c>SOCIAL_CONTRACT</c>, <c>ENTREPRENEUR_REQUIREMENT</c>,
+    /// <c>MINUTES_OF_ELECTION</c> or <c>CUSTOM</c>.
     /// </summary>
     [JsonPropertyName("type")]
-    public AccountDocumentType? Type { get; set; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// Document group title

@@ -14,26 +14,30 @@ public class MyAccountGetStatusResponseDto
     public string? Id { get; set; }
 
     /// <summary>
-    /// Status of sent business data
+    /// Status of the sent business data. One of <c>PENDING</c>, <c>APPROVED</c>, <c>REJECTED</c> or
+    /// <c>AWAITING_APPROVAL</c>.
     /// </summary>
     [JsonPropertyName("commercialInfo")]
-    public MyAccountStatus? CommercialInfo { get; set; }
+    public string? CommercialInfo { get; set; }
 
     /// <summary>
-    /// Status of sent business data
+    /// Status of the sent bank account data. One of <c>PENDING</c>, <c>APPROVED</c>, <c>REJECTED</c> or
+    /// <c>AWAITING_APPROVAL</c>.
     /// </summary>
     [JsonPropertyName("bankAccountInfo")]
-    public MyAccountStatus? BankAccountInfo { get; set; }
+    public string? BankAccountInfo { get; set; }
 
     /// <summary>
-    /// Status of sent business data
+    /// Status of the sent documentation. One of <c>PENDING</c>, <c>APPROVED</c>, <c>REJECTED</c> or
+    /// <c>AWAITING_APPROVAL</c>.
     /// </summary>
     [JsonPropertyName("documentation")]
-    public MyAccountStatus? Documentation { get; set; }
+    public string? Documentation { get; set; }
 
     /// <summary>
-    /// Status of sent business data
+    /// Overall status of the account registration. One of <c>PENDING</c>, <c>APPROVED</c>, <c>REJECTED</c> or
+    /// <c>AWAITING_APPROVAL</c>.
     /// </summary>
     [JsonPropertyName("general")]
-    public MyAccountStatus? General { get; set; }
+    public string? General { get; set; }
 }
