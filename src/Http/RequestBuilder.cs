@@ -13,6 +13,7 @@ public class RequestBuilder
     private readonly Dictionary<string, string> _queryParams = new();
     private readonly Dictionary<string, string> _headers = new();
     private object? _body;
+    private HttpContent? _content;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequestBuilder"/> class.
@@ -60,6 +61,7 @@ public class RequestBuilder
     public RequestBuilder SetBody(object body)
     {
         _body = body;
+        _content = null;
         return this;
     }
 
@@ -71,6 +73,20 @@ public class RequestBuilder
     public RequestBuilder SetJsonContent(object content)
     {
         _body = content;
+        _content = null;
+        return this;
+    }
+
+    /// <summary>
+    /// Set the request body with multipart/form-data content, sent as is. It replaces any JSON body set before, since a
+    /// request carries a single body.
+    /// </summary>
+    /// <param name="content">Multipart content to send</param>
+    /// <returns>This builder instance</returns>
+    public RequestBuilder SetMultipartContent(MultipartFormDataContent content)
+    {
+        _content = content;
+        _body = null;
         return this;
     }
 
@@ -103,7 +119,11 @@ public class RequestBuilder
         }
 
         // Add body
-        if (_body != null)
+        if (_content != null)
+        {
+            request.Content = _content;
+        }
+        else if (_body != null)
         {
             var json = ModelConverter.ToJson(_body);
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");

@@ -49,11 +49,24 @@ public abstract class BaseService
     /// <param name="request">HTTP request message</param>
     /// <returns>HTTP response message</returns>
     /// <exception cref="ApiException">Thrown when the request fails</exception>
-    protected async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage request)
+    protected Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage request) =>
+        ExecuteAsync(request, CancellationToken.None);
+
+    /// <summary>
+    /// Execute an HTTP request, observing a cancellation token
+    /// </summary>
+    /// <param name="request">HTTP request message</param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
+    /// <returns>HTTP response message</returns>
+    /// <exception cref="ApiException">Thrown when the request fails</exception>
+    /// <exception cref="OperationCanceledException">Thrown when <paramref name="cancellationToken"/> is cancelled</exception>
+    protected async Task<HttpResponseMessage> ExecuteAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var response = await HttpClient.SendAsync(request);
+            var response = await HttpClient.SendAsync(request, cancellationToken);
 
             if (response.IsSuccessStatusCode)
             {
@@ -70,7 +83,7 @@ public abstract class BaseService
         {
             throw new ApiException($"HTTP request failed: {ex.Message}", 0, null, ex);
         }
-        catch (TaskCanceledException ex)
+        catch (TaskCanceledException ex) when (!cancellationToken.IsCancellationRequested)
         {
             throw new ApiException("Request timed out", 408, null, ex);
         }
@@ -82,9 +95,19 @@ public abstract class BaseService
     /// <typeparam name="T">Type of model to return</typeparam>
     /// <param name="request">HTTP request message</param>
     /// <returns>Deserialized model object</returns>
-    protected async Task<T> ExecuteAsync<T>(HttpRequestMessage request)
+    protected Task<T> ExecuteAsync<T>(HttpRequestMessage request) =>
+        ExecuteAsync<T>(request, CancellationToken.None);
+
+    /// <summary>
+    /// Execute an HTTP request and convert response to model, observing a cancellation token
+    /// </summary>
+    /// <typeparam name="T">Type of model to return</typeparam>
+    /// <param name="request">HTTP request message</param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
+    /// <returns>Deserialized model object</returns>
+    protected async Task<T> ExecuteAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        var response = await ExecuteAsync(request);
+        var response = await ExecuteAsync(request, cancellationToken);
         return await ModelConverter.ConvertAsync<T>(response);
     }
 

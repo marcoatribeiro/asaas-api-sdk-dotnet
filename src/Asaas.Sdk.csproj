@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<PackageId>TorinoInfo.AsaasSdk</PackageId>
-		<PackageVersion>1.3.0</PackageVersion>
-		<Version>1.3.0</Version>
+		<PackageVersion>1.4.0</PackageVersion>
+		<Version>1.4.0</Version>
 		<Authors>Marco Ribeiro</Authors>
 		<Company>Torino Informática</Company>
 		<Description>A .NET 8 SDK for Asaas Payment Gateway API</Description>
@@ -19,6 +19,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591;CS1584</NoWarn>
 		<PackageReleaseNotes>
+			* 1.4.0 - UploadAccountDocumentAsync now sends multipart/form-data to /v3/myAccount/documents/{id} and honours its cancellation token; the previous signature posted JSON to a path without the document id and never reached a valid endpoint. Removed AccountDocumentSaveRequestDto.
 			* 1.3.0 - Replaced the account status and document enums with strings, since System.Text.Json does not honour EnumMemberAttribute and every SNAKE_CASE value failed to deserialize.
 			* 1.2.0 - Added CPF/CNPJ filtering to ListSubaccountsAsync while preserving existing calls; updated NuGet dependencies.
 			* 1.1.5 - Removed InvoiceType enum and switched property type to string.

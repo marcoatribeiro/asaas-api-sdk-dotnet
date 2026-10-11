@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Http;
 using Asaas.Sdk.Models;
@@ -43,17 +44,53 @@ public class AccountDocumentService : BaseService
     }
 
     /// <summary>
-    /// Upload an account document
+    /// Upload the file of a pending document group (<c>POST /v3/myAccount/documents/{id}</c>, multipart/form-data).
     /// </summary>
+    /// <remarks>
+    /// Only for a group listed by <see cref="ListAccountDocumentsAsync"/> without an <c>onboardingUrl</c>: a group that
+    /// carries one can only be dealt with through that link, and the Asaas rejects the upload. A group holds a single
+    /// valid file, so a new upload replaces the previous one. A successful response confirms the file was received,
+    /// not that it was approved.
+    /// </remarks>
+    /// <param name="id">Identifier of the document group, as listed by <see cref="ListAccountDocumentsAsync"/></param>
+    /// <param name="documentFile">Content of the file. It is read once, and disposed together with the request.</param>
+    /// <param name="fileName">File name sent with the content</param>
+    /// <param name="contentType">Media type of the file (e.g. <c>application/pdf</c>)</param>
+    /// <param name="type">
+    /// Document type (e.g. <c>IDENTIFICATION</c>, <c>SOCIAL_CONTRACT</c>, <c>MINUTES_OF_ELECTION</c>, <c>CUSTOM</c>).
+    /// Optional: the group is already identified by <paramref name="id"/>, so the field is omitted when null.
+    /// </param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
+    /// <returns>The document identifier and its status after the upload</returns>
     public async Task<AccountDocumentGetResponseDto> UploadAccountDocumentAsync(
-        AccountDocumentSaveRequestDto document,
+        string id,
+        Stream documentFile,
+        string fileName,
+        string contentType,
+        string? type = null,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, "v3/myAccount/documents")
-            .SetBody(document);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        ArgumentNullException.ThrowIfNull(documentFile);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountDocumentGetResponseDto>(request);
+        using var content = new MultipartFormDataContent();
+
+        var fileContent = new StreamContent(documentFile);
+        fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+        content.Add(fileContent, "documentFile", fileName);
+
+        if (!string.IsNullOrWhiteSpace(type))
+        {
+            content.Add(new StringContent(type), "type");
+        }
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/myAccount/documents/{Uri.EscapeDataString(id)}")
+            .SetMultipartContent(content);
+
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<AccountDocumentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
