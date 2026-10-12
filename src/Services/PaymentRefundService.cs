@@ -25,7 +25,7 @@ public class PaymentRefundService : BaseService
             .SetBody(refundData);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -37,6 +37,6 @@ public class PaymentRefundService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{paymentId}/status");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

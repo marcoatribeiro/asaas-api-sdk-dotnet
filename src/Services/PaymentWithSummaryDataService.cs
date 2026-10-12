@@ -35,7 +35,7 @@ public class PaymentWithSummaryDataService : BaseService
             .AddQueryParam("includeSummary", true);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -55,6 +55,6 @@ public class PaymentWithSummaryDataService : BaseService
             .AddQueryParam("dueDateLe", dueDateLe?.ToString("yyyy-MM-dd"));
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

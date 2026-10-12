@@ -26,7 +26,7 @@ public class PaymentDunningService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class PaymentDunningService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class PaymentDunningService : BaseService
             .SetBody(dunning);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class PaymentDunningService : BaseService
             .SetBody(simulation);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public class PaymentDunningService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{id}/history");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public class PaymentDunningService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{id}/partialPayments");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ public class PaymentDunningService : BaseService
             .AddQueryParam("customer", customerId);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -116,6 +116,6 @@ public class PaymentDunningService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentDunnings/{id}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

@@ -19,10 +19,11 @@ public static class ModelConverter
     /// </summary>
     /// <typeparam name="T">Type of model to convert to</typeparam>
     /// <param name="response">HTTP response message</param>
+    /// <param name="cancellationToken">Token that cancels reading the response</param>
     /// <returns>Deserialized model object</returns>
-    public static async Task<T> ConvertAsync<T>(HttpResponseMessage response)
+    public static async Task<T> ConvertAsync<T>(HttpResponseMessage response, CancellationToken cancellationToken = default)
     {
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
         
         if (string.IsNullOrEmpty(content))
         {

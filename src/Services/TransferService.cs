@@ -37,7 +37,7 @@ public class TransferService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<TransferListResponseDto>(request);
+        return await ExecuteAsync<TransferListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class TransferService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/transfers/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<TransferGetResponseDto>(request);
+        return await ExecuteAsync<TransferGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public class TransferService : BaseService
             .SetBody(transfer);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<TransferGetResponseDto>(request);
+        return await ExecuteAsync<TransferGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -122,7 +122,7 @@ public class TransferService : BaseService
             .SetBody(transfer);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<TransferSaveInternalTransferResponseDto>(request);
+        return await ExecuteAsync<TransferSaveInternalTransferResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -142,6 +142,6 @@ public class TransferService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/transfers/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<TransferDeleteResponseDto>(request);
+        return await ExecuteAsync<TransferDeleteResponseDto>(request, cancellationToken);
     }
 }

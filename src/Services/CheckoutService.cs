@@ -24,7 +24,7 @@ public class CheckoutService : BaseService
             .SetBody(session);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -36,6 +36,6 @@ public class CheckoutService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/checkout/sessions/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

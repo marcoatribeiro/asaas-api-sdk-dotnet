@@ -26,7 +26,7 @@ public class InstallmentService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class InstallmentService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/installments/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class InstallmentService : BaseService
             .SetBody(installment);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class InstallmentService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/installments/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request);
+        await ExecuteAsync(request, cancellationToken);
     }
 
     /// <summary>
@@ -76,6 +76,6 @@ public class InstallmentService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/installments/{id}/payments");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

@@ -26,7 +26,7 @@ public class AnticipationService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class AnticipationService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/anticipations/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class AnticipationService : BaseService
             .SetBody(anticipation);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class AnticipationService : BaseService
             .SetBody(simulation);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public class AnticipationService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/anticipations/configuration");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ public class AnticipationService : BaseService
             .SetBody(configuration);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -102,6 +102,6 @@ public class AnticipationService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/anticipations/limits");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

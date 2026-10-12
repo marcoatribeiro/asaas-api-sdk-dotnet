@@ -22,7 +22,7 @@ public class NotificationService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{paymentId}/notifications");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class NotificationService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/notifications/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class NotificationService : BaseService
             .SetBody(notification);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -64,6 +64,6 @@ public class NotificationService : BaseService
             .SetBody(notifications);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

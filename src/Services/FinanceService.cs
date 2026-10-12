@@ -29,7 +29,7 @@ public class FinanceService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/finance/balance");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FinanceBalanceResponseDto>(request);
+        return await ExecuteAsync<FinanceBalanceResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public class FinanceService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/finance/getCurrentBalance");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FinanceBalanceResponseDto>(request);
+        return await ExecuteAsync<FinanceBalanceResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class FinanceService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/finance/payment/statistics");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FinanceGetPaymentStatisticsResponseDto>(request);
+        return await ExecuteAsync<FinanceGetPaymentStatisticsResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -68,6 +68,6 @@ public class FinanceService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/finance/split/statistics");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FinanceGetSplitStatisticsResponseDto>(request);
+        return await ExecuteAsync<FinanceGetSplitStatisticsResponseDto>(request, cancellationToken);
     }
 }

@@ -37,7 +37,7 @@ public class WebhookService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<WebhookConfigListResponseDto>(request);
+        return await ExecuteAsync<WebhookConfigListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class WebhookService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/webhooks/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<WebhookConfigGetResponseDto>(request);
+        return await ExecuteAsync<WebhookConfigGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class WebhookService : BaseService
             .SetBody(webhook);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<WebhookConfigGetResponseDto>(request);
+        return await ExecuteAsync<WebhookConfigGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public class WebhookService : BaseService
             .SetBody(webhook);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<WebhookConfigGetResponseDto>(request);
+        return await ExecuteAsync<WebhookConfigGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -138,6 +138,6 @@ public class WebhookService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/webhooks/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<WebhookConfigDeleteResponseDto>(request);
+        return await ExecuteAsync<WebhookConfigDeleteResponseDto>(request, cancellationToken);
     }
 }

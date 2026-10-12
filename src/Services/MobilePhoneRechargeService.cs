@@ -26,7 +26,7 @@ public class MobilePhoneRechargeService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class MobilePhoneRechargeService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/mobilePhoneRecharges/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class MobilePhoneRechargeService : BaseService
             .SetBody(recharge);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class MobilePhoneRechargeService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/mobilePhoneRecharges/providers");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public class MobilePhoneRechargeService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/mobilePhoneRecharges/providers/{provider}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -87,6 +87,6 @@ public class MobilePhoneRechargeService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/mobilePhoneRecharges/{id}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

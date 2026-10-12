@@ -52,7 +52,7 @@ public class CustomerService : BaseService
             .AddQueryParam("externalReference", externalReference);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<CustomerListResponseDto>(request);
+        return await ExecuteAsync<CustomerListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class CustomerService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/customers/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<CustomerGetResponseDto>(request);
+        return await ExecuteAsync<CustomerGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public class CustomerService : BaseService
             .SetJsonContent(customerSaveRequestDto);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<CustomerGetResponseDto>(request);
+        return await ExecuteAsync<CustomerGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class CustomerService : BaseService
             .SetJsonContent(customerUpdateRequestDto);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<CustomerGetResponseDto>(request);
+        return await ExecuteAsync<CustomerGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -143,7 +143,7 @@ public class CustomerService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/customers/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<CustomerDeleteResponseDto>(request);
+        return await ExecuteAsync<CustomerDeleteResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public class CustomerService : BaseService
             .SetJsonContent(new { });
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<CustomerGetResponseDto>(request);
+        return await ExecuteAsync<CustomerGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -185,6 +185,6 @@ public class CustomerService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/customers/{id}/notifications");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<NotificationListResponseDto>(request);
+        return await ExecuteAsync<NotificationListResponseDto>(request, cancellationToken);
     }
 }

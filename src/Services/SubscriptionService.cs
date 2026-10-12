@@ -26,7 +26,7 @@ public class SubscriptionService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class SubscriptionService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/subscriptions/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class SubscriptionService : BaseService
             .SetBody(subscription);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class SubscriptionService : BaseService
             .SetBody(subscription);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class SubscriptionService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/subscriptions/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request);
+        await ExecuteAsync(request, cancellationToken);
     }
 
     /// <summary>
@@ -96,6 +96,6 @@ public class SubscriptionService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

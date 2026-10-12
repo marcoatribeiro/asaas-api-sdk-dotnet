@@ -26,7 +26,7 @@ public class RecurringPixService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class RecurringPixService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurring/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class RecurringPixService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class RecurringPixService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurring/{id}/items/{itemId}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -80,6 +80,6 @@ public class RecurringPixService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/recurring/{id}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

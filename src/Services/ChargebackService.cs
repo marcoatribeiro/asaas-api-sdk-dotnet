@@ -28,7 +28,7 @@ public class ChargebackService : BaseService
             .AddQueryParam("status", status);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class ChargebackService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/chargebacks/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class ChargebackService : BaseService
             .SetBody(contest);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class ChargebackService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/chargebacks/{id}/documents");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -82,6 +82,6 @@ public class ChargebackService : BaseService
             .SetBody(document);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

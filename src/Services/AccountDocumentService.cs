@@ -28,7 +28,7 @@ public class AccountDocumentService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountDocumentShowResponseDto>(request);
+        return await ExecuteAsync<AccountDocumentShowResponseDto>(request, cancellationToken);
     }
 
     /// <summary>

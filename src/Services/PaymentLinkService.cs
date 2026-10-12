@@ -26,7 +26,7 @@ public class PaymentLinkService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class PaymentLinkService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class PaymentLinkService : BaseService
             .SetBody(paymentLink);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class PaymentLinkService : BaseService
             .SetBody(paymentLink);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class PaymentLinkService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/paymentLinks/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request);
+        await ExecuteAsync(request, cancellationToken);
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ public class PaymentLinkService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{id}/files");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -106,6 +106,6 @@ public class PaymentLinkService : BaseService
             .SetBody(file);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

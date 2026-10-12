@@ -22,7 +22,7 @@ public class AccountInfoService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountInfoGetResponseDto>(request);
+        return await ExecuteAsync<AccountInfoGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class AccountInfoService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount/commercialInfo");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountInfoGetResponseDto>(request);
+        return await ExecuteAsync<AccountInfoGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class AccountInfoService : BaseService
             .SetBody(accountInfo);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountInfoGetResponseDto>(request);
+        return await ExecuteAsync<AccountInfoGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class AccountInfoService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount/status");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<MyAccountGetStatusResponseDto>(request);
+        return await ExecuteAsync<MyAccountGetStatusResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class AccountInfoService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount/whiteLabel");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public class AccountInfoService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/myAccount/paymentEscrowConfig");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountPaymentEscrowConfigDto>(request);
+        return await ExecuteAsync<AccountPaymentEscrowConfigDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -94,6 +94,6 @@ public class AccountInfoService : BaseService
             .SetBody(config);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountPaymentEscrowConfigDto>(request);
+        return await ExecuteAsync<AccountPaymentEscrowConfigDto>(request, cancellationToken);
     }
 }

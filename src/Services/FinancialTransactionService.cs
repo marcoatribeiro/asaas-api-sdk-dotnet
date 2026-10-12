@@ -43,7 +43,7 @@ public class FinancialTransactionService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FinancialTransactionListResponseDto>(request);
+        return await ExecuteAsync<FinancialTransactionListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class FinancialTransactionService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/financialTransactions/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FinancialTransactionGetResponseDto>(request);
+        return await ExecuteAsync<FinancialTransactionGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public class FinancialTransactionService : BaseService
             .AddQueryParam("anticipation", anticipationId);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FinancialTransactionListResponseDto>(request);
+        return await ExecuteAsync<FinancialTransactionListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -107,6 +107,6 @@ public class FinancialTransactionService : BaseService
             .AddQueryParam("payment", paymentId);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FinancialTransactionListResponseDto>(request);
+        return await ExecuteAsync<FinancialTransactionListResponseDto>(request, cancellationToken);
     }
 }

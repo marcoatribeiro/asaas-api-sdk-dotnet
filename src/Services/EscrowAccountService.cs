@@ -21,7 +21,7 @@ public class EscrowAccountService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/paymentEscrowAccount");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class EscrowAccountService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class EscrowAccountService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentEscrowAccount/items/{paymentId}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public class EscrowAccountService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentEscrowAccount/items/{paymentId}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -73,6 +73,6 @@ public class EscrowAccountService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentEscrowAccount/items/{paymentId}/release");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

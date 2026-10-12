@@ -59,7 +59,7 @@ public class SubaccountService : BaseService
             .AddQueryParam("cpfCnpj", cpfCnpj);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountListResponseDto>(request);
+        return await ExecuteAsync<AccountListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class SubaccountService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/accounts/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountGetResponseDto>(request);
+        return await ExecuteAsync<AccountGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class SubaccountService : BaseService
             .SetBody(subaccount);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountSaveResponseDto>(request);
+        return await ExecuteAsync<AccountSaveResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -175,6 +175,6 @@ public class SubaccountService : BaseService
             .SetBody(subaccount);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountGetResponseDto>(request);
+        return await ExecuteAsync<AccountGetResponseDto>(request, cancellationToken);
     }
 }

@@ -22,7 +22,7 @@ public class PaymentDocumentService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{paymentId}/documents");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class PaymentDocumentService : BaseService
             .SetBody(document);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class PaymentDocumentService : BaseService
             .SetBody(document);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -66,6 +66,6 @@ public class PaymentDocumentService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/payments/{paymentId}/documents/{documentId}");
         var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request);
+        await ExecuteAsync(request, cancellationToken);
     }
 }

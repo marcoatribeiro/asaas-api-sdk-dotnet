@@ -44,15 +44,6 @@ public abstract class BaseService
     }
 
     /// <summary>
-    /// Execute an HTTP request
-    /// </summary>
-    /// <param name="request">HTTP request message</param>
-    /// <returns>HTTP response message</returns>
-    /// <exception cref="ApiException">Thrown when the request fails</exception>
-    protected Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage request) =>
-        ExecuteAsync(request, CancellationToken.None);
-
-    /// <summary>
     /// Execute an HTTP request, observing a cancellation token
     /// </summary>
     /// <param name="request">HTTP request message</param>
@@ -74,7 +65,7 @@ public abstract class BaseService
             }
 
             // Handle error response
-            var content = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync(cancellationToken);
             var message = ExtractErrorMessage(response, content);
             
             throw new ApiException(message, (int)response.StatusCode, content);
@@ -90,15 +81,6 @@ public abstract class BaseService
     }
 
     /// <summary>
-    /// Execute an HTTP request and convert response to model
-    /// </summary>
-    /// <typeparam name="T">Type of model to return</typeparam>
-    /// <param name="request">HTTP request message</param>
-    /// <returns>Deserialized model object</returns>
-    protected Task<T> ExecuteAsync<T>(HttpRequestMessage request) =>
-        ExecuteAsync<T>(request, CancellationToken.None);
-
-    /// <summary>
     /// Execute an HTTP request and convert response to model, observing a cancellation token
     /// </summary>
     /// <typeparam name="T">Type of model to return</typeparam>
@@ -108,7 +90,7 @@ public abstract class BaseService
     protected async Task<T> ExecuteAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         var response = await ExecuteAsync(request, cancellationToken);
-        return await ModelConverter.ConvertAsync<T>(response);
+        return await ModelConverter.ConvertAsync<T>(response, cancellationToken);
     }
 
     /// <summary>

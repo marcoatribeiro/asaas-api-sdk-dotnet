@@ -22,7 +22,7 @@ public class FiscalInfoService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/fiscalInfo");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoGetResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class FiscalInfoService : BaseService
             .AddQueryParam("municipalityInscription", municipalityCode);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoMunicipalOptionsGetResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoMunicipalOptionsGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class FiscalInfoService : BaseService
             .SetBody(fiscalInfo);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoGetResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public class FiscalInfoService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/fiscalInfo/municipalOptions");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoMunicipalOptionsGetResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoMunicipalOptionsGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class FiscalInfoService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/fiscalInfo/");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoGetResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public class FiscalInfoService : BaseService
             .SetBody(fiscalInfo);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoGetResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public class FiscalInfoService : BaseService
         }
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoListMunicipalServicesResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoListMunicipalServicesResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class FiscalInfoService : BaseService
         }
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoListInvoiceNbsCodesResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoListInvoiceNbsCodesResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -142,6 +142,6 @@ public class FiscalInfoService : BaseService
             .SetJsonContent(requestDto ?? new FiscalInfoUpdateUseNationalPortalRequestDto());
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<FiscalInfoUpdateUseNationalPortalResponseDto>(request);
+        return await ExecuteAsync<FiscalInfoUpdateUseNationalPortalResponseDto>(request, cancellationToken);
     }
 }

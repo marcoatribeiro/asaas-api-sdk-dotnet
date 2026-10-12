@@ -24,7 +24,7 @@ public class CreditCardService : BaseService
             .SetBody(creditCard);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class CreditCardService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/creditCard/{token}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -48,6 +48,6 @@ public class CreditCardService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/creditCard/{token}");
         var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request);
+        await ExecuteAsync(request, cancellationToken);
     }
 }

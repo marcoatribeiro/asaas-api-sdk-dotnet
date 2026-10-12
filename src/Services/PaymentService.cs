@@ -46,7 +46,7 @@ public class PaymentService : BaseService
         }
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentListResponseDto>(request);
+        return await ExecuteAsync<PaymentListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class PaymentService : BaseService
             .SetBody(payment);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public class PaymentService : BaseService
             .SetBody(payment);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/payments/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentDeleteResponseDto>(request);
+        return await ExecuteAsync<PaymentDeleteResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public class PaymentService : BaseService
             .SetJsonContent(payment);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -191,7 +191,7 @@ public class PaymentService : BaseService
             .SetJsonContent(new { });
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -220,7 +220,7 @@ public class PaymentService : BaseService
             .SetJsonContent(paymentRequest);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -240,7 +240,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/billingInfo");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentBillingInfoResponseDto>(request);
+        return await ExecuteAsync<PaymentBillingInfoResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -260,7 +260,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/viewingInfo");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentViewingInfoResponseDto>(request);
+        return await ExecuteAsync<PaymentViewingInfoResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -280,7 +280,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -309,7 +309,7 @@ public class PaymentService : BaseService
             .SetJsonContent(payment);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -331,7 +331,7 @@ public class PaymentService : BaseService
             .SetJsonContent(new { });
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -351,7 +351,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/status");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentStatusResponseDto>(request);
+        return await ExecuteAsync<PaymentStatusResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -380,7 +380,7 @@ public class PaymentService : BaseService
             .SetJsonContent(refundRequest);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -400,7 +400,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/identificationField");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentIdentificationFieldResponseDto>(request);
+        return await ExecuteAsync<PaymentIdentificationFieldResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -420,7 +420,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/pixQrCode");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentPixQrCodeResponseDto>(request);
+        return await ExecuteAsync<PaymentPixQrCodeResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -449,7 +449,7 @@ public class PaymentService : BaseService
             .SetJsonContent(receiptRequest);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -471,7 +471,7 @@ public class PaymentService : BaseService
             .SetJsonContent(new { });
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -488,7 +488,7 @@ public class PaymentService : BaseService
             .SetJsonContent(simulateRequest ?? new PaymentSimulateRequestDto());
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentSimulateResponseDto>(request);
+        return await ExecuteAsync<PaymentSimulateResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -508,7 +508,7 @@ public class PaymentService : BaseService
 
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/escrow");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentEscrowGetResponseDto>(request);
+        return await ExecuteAsync<PaymentEscrowGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -521,6 +521,6 @@ public class PaymentService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/payments/limits");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentLimitsResponseDto>(request);
+        return await ExecuteAsync<PaymentLimitsResponseDto>(request, cancellationToken);
     }
 }

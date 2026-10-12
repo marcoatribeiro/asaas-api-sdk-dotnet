@@ -23,7 +23,7 @@ public class SandboxActionsService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/receiveInCash");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public class SandboxActionsService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/confirm");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class SandboxActionsService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/refund");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class SandboxActionsService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/chargeback");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class SandboxActionsService : BaseService
             .SetBody(transaction);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public class SandboxActionsService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/transfers/{transferId}/done");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<TransferGetResponseDto>(request);
+        return await ExecuteAsync<TransferGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -97,6 +97,6 @@ public class SandboxActionsService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/overdue");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<PaymentGetResponseDto>(request);
+        return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
 }

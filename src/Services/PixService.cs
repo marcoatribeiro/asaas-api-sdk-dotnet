@@ -26,7 +26,7 @@ public class PixService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class PixService : BaseService
             .SetBody(key);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class PixService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/addressKeys/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class PixService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/pix/addressKeys/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request);
+        await ExecuteAsync(request, cancellationToken);
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public class PixService : BaseService
             .SetBody(qrCode);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public class PixService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/qrCodes/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -102,6 +102,6 @@ public class PixService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/pix/qrCodes/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request);
+        await ExecuteAsync(request, cancellationToken);
     }
 }

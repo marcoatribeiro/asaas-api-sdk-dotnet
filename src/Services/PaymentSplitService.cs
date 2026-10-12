@@ -26,7 +26,7 @@ public class PaymentSplitService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class PaymentSplitService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentSplits/{paymentId}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class PaymentSplitService : BaseService
             .SetBody(split);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -65,6 +65,6 @@ public class PaymentSplitService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/paymentSplits/{paymentId}");
         var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request);
+        await ExecuteAsync(request, cancellationToken);
     }
 }

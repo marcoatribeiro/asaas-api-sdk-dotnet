@@ -24,7 +24,7 @@ public class PixTransactionService : BaseService
             .SetBody(transaction);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class PixTransactionService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class PixTransactionService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class PixTransactionService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/{id}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 
     /// <summary>
@@ -78,6 +78,6 @@ public class PixTransactionService : BaseService
             .SetBody(payload);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request);
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
 }

@@ -27,7 +27,7 @@ public class InvoiceService : BaseService
             .AddQueryParam("limit", limit);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<InvoiceListResponseDto>(request);
+        return await ExecuteAsync<InvoiceListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class InvoiceService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/invoices/{id}");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<InvoiceGetResponseDto>(request);
+        return await ExecuteAsync<InvoiceGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class InvoiceService : BaseService
             .SetBody(invoice);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<InvoiceGetResponseDto>(request);
+        return await ExecuteAsync<InvoiceGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class InvoiceService : BaseService
             .SetBody(invoice);
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<InvoiceGetResponseDto>(request);
+        return await ExecuteAsync<InvoiceGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public class InvoiceService : BaseService
         }
 
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<InvoiceGetResponseDto>(request);
+        return await ExecuteAsync<InvoiceGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -99,6 +99,6 @@ public class InvoiceService : BaseService
     {
         var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/invoices/{id}/authorize");
         var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<InvoiceGetResponseDto>(request);
+        return await ExecuteAsync<InvoiceGetResponseDto>(request, cancellationToken);
     }
 }
