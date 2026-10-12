@@ -1,5 +1,7 @@
+using System.Globalization;
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Http;
+using Asaas.Sdk.Models;
 
 namespace Asaas.Sdk.Services;
 
@@ -14,73 +16,86 @@ public class RecurringPixService : BaseService
     }
 
     /// <summary>
-    /// List recurring PIX transactions
+    /// List recurring PIX transactions (<c>GET /v3/pix/transactions/recurrings</c>)
     /// </summary>
-    /// <returns>
-    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
-    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
-    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
-    /// </returns>
-    public async Task<dynamic> ListRecurringTransactionsAsync(
+    public async Task<PixRecurringTransactionListResponseDto> ListRecurringTransactionsAsync(
         long? offset = null,
         long? limit = null,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/pix/transactions/recurring")
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/pix/transactions/recurrings")
             .AddQueryParam("offset", offset)
             .AddQueryParam("limit", limit);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixRecurringTransactionListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Get recurring PIX transaction by ID
+    /// List recurring PIX transactions (<c>GET /v3/pix/transactions/recurrings</c>), with the filters the Asaas documents
     /// </summary>
-    /// <returns>
-    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
-    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
-    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
-    /// </returns>
-    public async Task<dynamic> GetRecurringTransactionAsync(
+    /// <param name="parameters">Pagination and filters. Those left null are not sent.</param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
+    public async Task<PixRecurringTransactionListResponseDto> ListRecurringTransactionsAsync(
+        ListPixRecurringTransactionsParameters parameters,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(parameters);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/pix/transactions/recurrings")
+            .AddQueryParam("offset", parameters.Offset)
+            .AddQueryParam("limit", parameters.Limit)
+            .AddQueryParam("status", parameters.Status)
+            .AddQueryParam("value", parameters.Value?.ToString(CultureInfo.InvariantCulture))
+            .AddQueryParam("searchText", parameters.SearchText);
+
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixRecurringTransactionListResponseDto>(request, cancellationToken);
+    }
+
+    /// <summary>
+    /// Get recurring PIX transaction by ID (<c>GET /v3/pix/transactions/recurrings/{id}</c>)
+    /// </summary>
+    public async Task<PixRecurringTransactionGetResponseDto> GetRecurringTransactionAsync(
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurring/{id}");
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurrings/{Uri.EscapeDataString(id)}");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixRecurringTransactionGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// List items of a recurring PIX transaction
+    /// List items of a recurring PIX transaction (<c>GET /v3/pix/transactions/recurrings/{id}/items</c>)
     /// </summary>
-    /// <returns>
-    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
-    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
-    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
-    /// </returns>
-    public async Task<dynamic> ListRecurringTransactionItemsAsync(
+    public async Task<PixRecurringTransactionItemListResponseDto> ListRecurringTransactionItemsAsync(
         string id,
         long? offset = null,
         long? limit = null,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurring/{id}/items")
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurrings/{Uri.EscapeDataString(id)}/items")
             .AddQueryParam("offset", offset)
             .AddQueryParam("limit", limit);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixRecurringTransactionItemListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Get recurring PIX transaction item by ID
+    /// Get recurring PIX transaction item by ID. Calls <c>GET /v3/pix/transactions/recurring/{id}/items/{itemId}</c>, which
+    /// the Asaas does not document; its reference has no operation to read one item, only to list them.
     /// </summary>
     /// <returns>
     /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
     /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
     /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
     /// </returns>
+    [Obsolete("Calls a route the Asaas does not document. Use ListRecurringTransactionItemsAsync.")]
     public async Task<dynamic> GetRecurringTransactionItemAsync(
         string id,
         string itemId,
@@ -92,19 +107,35 @@ public class RecurringPixService : BaseService
     }
 
     /// <summary>
-    /// Cancel a recurring PIX transaction
+    /// Cancel a recurring PIX transaction (<c>POST /v3/pix/transactions/recurrings/{id}/cancel</c>). Check
+    /// <see cref="PixRecurringTransactionGetResponseDto.CanBeCancelled"/> first.
     /// </summary>
-    /// <returns>
-    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
-    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
-    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
-    /// </returns>
-    public async Task<dynamic> CancelRecurringTransactionAsync(
+    public async Task<PixRecurringTransactionGetResponseDto> CancelRecurringTransactionAsync(
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/recurring/{id}/cancel");
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/recurrings/{Uri.EscapeDataString(id)}/cancel");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixRecurringTransactionGetResponseDto>(request, cancellationToken);
+    }
+
+    /// <summary>
+    /// Cancel an item of a recurring PIX transaction (<c>POST /v3/pix/transactions/recurrings/items/{id}/cancel</c>).
+    /// Check <see cref="PixRecurringTransactionItemGetResponseDto.CanBeCancelled"/> in
+    /// <see cref="ListRecurringTransactionItemsAsync"/> first.
+    /// </summary>
+    /// <param name="itemId">Identifier of the item, as listed by <see cref="ListRecurringTransactionItemsAsync"/></param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
+    public async Task<PixRecurringTransactionItemGetResponseDto> CancelRecurringTransactionItemAsync(
+        string itemId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(itemId);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/recurrings/items/{Uri.EscapeDataString(itemId)}/cancel");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixRecurringTransactionItemGetResponseDto>(request, cancellationToken);
     }
 }

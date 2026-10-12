@@ -189,24 +189,27 @@ var qrCode = await sdk.Pix.CreateQrCodeAsync(new PixQrCodeSaveRequestDto
 Console.WriteLine(qrCode.Payload);
 ```
 
-### Process PIX Transaction
+### Pay a PIX QR Code
 
 ```csharp
-var transaction = await sdk.PixTransaction.CreatePixTransactionAsync(new
+var decoded = await sdk.PixTransaction.DecodeQrCodeAsync(new PixQrCodeDecodeRequestDto
 {
-    value = 100.00,
-    pixAddressKey = "recipient-pix-key",
-    description = "Transfer via PIX"
+    Payload = "00020126330014BR.GOV.BCB.PIX..."
 });
-```
 
-### Decode PIX QR Code
-
-```csharp
-var decoded = await sdk.PixTransaction.DecodeQrCodeAsync(new
+if (decoded.CanBePaid == true)
 {
-    payload = "00020126330014BR.GOV.BCB.PIX..."
-});
+    var transaction = await sdk.PixTransaction.PayQrCodeAsync(new PixTransactionSaveRequestDto
+    {
+        QrCode = new PixTransactionQrCodeRequestDto { Payload = decoded.Payload },
+        Value = decoded.TotalValue ?? decoded.Value,
+        Description = "Transfer via PIX"
+    });
+
+    // The response is not the final confirmation: read the transaction again later
+    var current = await sdk.PixTransaction.GetTransactionAsync(transaction.Id!);
+    Console.WriteLine(current.Status);
+}
 ```
 
 ## Transfers

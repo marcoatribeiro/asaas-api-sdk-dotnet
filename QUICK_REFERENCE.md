@@ -99,13 +99,13 @@ var subscription = await sdk.Subscription.CreateSubscriptionAsync(new Subscripti
 });
 ```
 
-### Create PIX Transaction
+### Pay a PIX QR Code
 ```csharp
-var transaction = await sdk.PixTransaction.CreatePixTransactionAsync(new
+var transaction = await sdk.PixTransaction.PayQrCodeAsync(new PixTransactionSaveRequestDto
 {
-    value = 100.00,
-    pixAddressKey = "recipient-key",
-    description = "Payment via PIX"
+    QrCode = new PixTransactionQrCodeRequestDto { Payload = "00020126330014BR.GOV.BCB.PIX..." },
+    Value = 100.00m,
+    Description = "Payment via PIX"
 });
 ```
 

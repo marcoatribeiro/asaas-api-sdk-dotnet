@@ -1,5 +1,6 @@
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Http;
+using Asaas.Sdk.Models;
 
 namespace Asaas.Sdk.Services;
 
@@ -14,13 +15,34 @@ public class PixTransactionService : BaseService
     }
 
     /// <summary>
-    /// Create a PIX transaction
+    /// Pay a Pix QR Code (<c>POST /v3/pix/qrCodes/pay</c>)
+    /// </summary>
+    /// <remarks>
+    /// The response is not the final confirmation: keep the transaction <c>Id</c> and read its current state with
+    /// <see cref="GetTransactionAsync"/>.
+    /// </remarks>
+    public async Task<PixTransactionGetResponseDto> PayQrCodeAsync(
+        PixTransactionSaveRequestDto transaction,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(transaction);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, "v3/pix/qrCodes/pay")
+            .SetBody(transaction);
+
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixTransactionGetResponseDto>(request, cancellationToken);
+    }
+
+    /// <summary>
+    /// Create a PIX transaction. Calls <c>POST /v3/pix/transactions</c>, which the Asaas does not document.
     /// </summary>
     /// <returns>
     /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
     /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
     /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
     /// </returns>
+    [Obsolete("Calls a route the Asaas does not document. Use PayQrCodeAsync, which calls POST /v3/pix/qrCodes/pay.")]
     public async Task<dynamic> CreateTransactionAsync(
         object transaction,
         CancellationToken cancellationToken = default)
@@ -33,31 +55,23 @@ public class PixTransactionService : BaseService
     }
 
     /// <summary>
-    /// Get PIX transaction by ID
+    /// Get PIX transaction by ID (<c>GET /v3/pix/transactions/{id}</c>)
     /// </summary>
-    /// <returns>
-    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
-    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
-    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
-    /// </returns>
-    public async Task<dynamic> GetTransactionAsync(
+    public async Task<PixTransactionGetResponseDto> GetTransactionAsync(
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/{id}");
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/{Uri.EscapeDataString(id)}");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixTransactionGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// List PIX transactions
+    /// List PIX transactions (<c>GET /v3/pix/transactions</c>)
     /// </summary>
-    /// <returns>
-    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
-    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
-    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
-    /// </returns>
-    public async Task<dynamic> ListTransactionsAsync(
+    public async Task<PixTransactionListResponseDto> ListTransactionsAsync(
         long? offset = null,
         long? limit = null,
         CancellationToken cancellationToken = default)
@@ -66,43 +80,60 @@ public class PixTransactionService : BaseService
             .AddQueryParam("offset", offset)
             .AddQueryParam("limit", limit);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixTransactionListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Cancel a PIX transaction
+    /// List PIX transactions (<c>GET /v3/pix/transactions</c>), with the filters the Asaas documents
     /// </summary>
-    /// <returns>
-    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
-    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
-    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
-    /// </returns>
-    public async Task<dynamic> CancelTransactionAsync(
+    /// <param name="parameters">Pagination and filters. Those left null are not sent.</param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
+    public async Task<PixTransactionListResponseDto> ListTransactionsAsync(
+        ListPixTransactionsParameters parameters,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(parameters);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/pix/transactions")
+            .AddQueryParam("offset", parameters.Offset)
+            .AddQueryParam("limit", parameters.Limit)
+            .AddQueryParam("status", parameters.Status)
+            .AddQueryParam("type", parameters.Type)
+            .AddQueryParam("endToEndIdentifier", parameters.EndToEndIdentifier);
+
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixTransactionListResponseDto>(request, cancellationToken);
+    }
+
+    /// <summary>
+    /// Cancel a scheduled PIX transaction (<c>POST /v3/pix/transactions/{id}/cancel</c>). Check
+    /// <see cref="PixTransactionGetResponseDto.CanBeCanceled"/> first.
+    /// </summary>
+    public async Task<PixTransactionGetResponseDto> CancelTransactionAsync(
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/{id}/cancel");
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/{Uri.EscapeDataString(id)}/cancel");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixTransactionGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Decode a PIX QR Code
+    /// Decode a PIX QR Code to pay it (<c>POST /v3/pix/qrCodes/decode</c>)
     /// </summary>
-    /// <returns>
-    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
-    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
-    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
-    /// </returns>
-    public async Task<dynamic> DecodeQrCodeAsync(
-        object payload,
+    public async Task<PixQrCodeDecodeResponseDto> DecodeQrCodeAsync(
+        PixQrCodeDecodeRequestDto payload,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(payload);
+
         var requestBuilder = new RequestBuilder(HttpMethod.Post, "v3/pix/qrCodes/decode")
             .SetBody(payload);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PixQrCodeDecodeResponseDto>(request, cancellationToken);
     }
 }
