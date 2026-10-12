@@ -1,4 +1,4 @@
-# Asaas .NET SDK 1.5.0
+# Asaas .NET SDK 2.0.0
 
 Welcome to the official Asaas API SDK for .NET 8 documentation.
 
@@ -7,7 +7,7 @@ This guide will help you get started with integrating and using the Asaas SDK in
 ## Versions
 
 - API version: `3.0.0`
-- SDK version: `1.5.0`
+- SDK version: `2.0.0`
 - .NET version: `8.0`
 
 ## About the API
@@ -43,13 +43,13 @@ This SDK is compatible with: `.NET 8.0` or higher
 ### Using .NET CLI
 
 ```bash
-dotnet add package TorinoInfo.AsaasSdk --version 1.5.0
+dotnet add package TorinoInfo.AsaasSdk --version 2.0.0
 ```
 
 ### Using Package Manager Console
 
 ```powershell
-Install-Package TorinoInfo.AsaasSdk -Version 1.5.0
+Install-Package TorinoInfo.AsaasSdk -Version 2.0.0
 ```
 
 ### Using PackageReference
@@ -57,7 +57,7 @@ Install-Package TorinoInfo.AsaasSdk -Version 1.5.0
 Add the following to your `.csproj` file:
 
 ```xml
-<PackageReference Include="TorinoInfo.AsaasSdk" Version="1.5.0" />
+<PackageReference Include="TorinoInfo.AsaasSdk" Version="2.0.0" />
 ```
 
 ## Authentication
@@ -187,6 +187,8 @@ catch (ApiException ex)
 
 `ApiException.ResponseBody` keeps the response exactly as received. `Errors` is empty when the response had no `errors[]`
 (then `Message` is a top-level `message`/`error` string, or the HTTP reason phrase).
+
+Upgrading from 1.x? See [MIGRATION.md](MIGRATION.md).
 
 ## Response types
 

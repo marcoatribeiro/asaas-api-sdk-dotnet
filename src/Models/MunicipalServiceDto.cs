@@ -20,8 +20,9 @@ public class MunicipalServiceDto
     public string? Description { get; set; }
 
     /// <summary>
-    /// ISS percentage rate
+    /// ISS percentage rate (<c>5</c> means 5%). The Asaas reference gives both <c>0.5</c> and <c>5</c> as examples, so
+    /// check the scale against a sandbox response before relying on it.
     /// </summary>
     [JsonPropertyName("issTax")]
-    public double? IssTax { get; set; }
+    public decimal? IssTax { get; set; }
 }

@@ -11,7 +11,7 @@ public class TransferSaveRequestDto
     /// Amount to be transferred
     /// </summary>
     [JsonPropertyName("value")]
-    public double Value { get; set; }
+    public decimal Value { get; set; }
 
     /// <summary>
     /// Enter your account details if it is a transfer to a bank account

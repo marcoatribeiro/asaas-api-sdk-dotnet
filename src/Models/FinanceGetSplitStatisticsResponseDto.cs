@@ -11,11 +11,11 @@ public class FinanceGetSplitStatisticsResponseDto
     /// Amounts receivable
     /// </summary>
     [JsonPropertyName("income")]
-    public double? Income { get; set; }
+    public decimal? Income { get; set; }
 
     /// <summary>
     /// Values to be sent
     /// </summary>
     [JsonPropertyName("value")]
-    public double? Value { get; set; }
+    public decimal? Value { get; set; }
 }

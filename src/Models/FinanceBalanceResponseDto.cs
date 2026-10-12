@@ -11,5 +11,5 @@ public class FinanceBalanceResponseDto
     /// Account balance
     /// </summary>
     [JsonPropertyName("balance")]
-    public double? Balance { get; set; }
+    public decimal? Balance { get; set; }
 }

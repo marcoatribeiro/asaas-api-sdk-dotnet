@@ -90,7 +90,7 @@ public sealed class RetryHandlerTests
 
         // Assert
         Assert.Equal(3, rig.Inner.Attempts);
-        Assert.Equal(12.5, balance.Balance);
+        Assert.Equal(12.5m, balance.Balance);
     }
 
     [Theory]

@@ -11,7 +11,7 @@ public class TransferSaveInternalTransferRequestDto
     /// Amount to be transferred
     /// </summary>
     [JsonPropertyName("value")]
-    public double Value { get; set; }
+    public decimal Value { get; set; }
 
     /// <summary>
     /// Destination account information

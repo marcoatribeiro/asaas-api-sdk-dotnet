@@ -17,11 +17,11 @@ public class FinanceGetPaymentStatisticsResponseDto
     /// Amount
     /// </summary>
     [JsonPropertyName("value")]
-    public double? Value { get; set; }
+    public decimal? Value { get; set; }
 
     /// <summary>
     /// Total net worth
     /// </summary>
     [JsonPropertyName("netValue")]
-    public double? NetValue { get; set; }
+    public decimal? NetValue { get; set; }
 }

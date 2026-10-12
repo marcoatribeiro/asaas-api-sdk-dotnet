@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<PackageId>TorinoInfo.AsaasSdk</PackageId>
-		<PackageVersion>1.5.0</PackageVersion>
-		<Version>1.5.0</Version>
+		<PackageVersion>2.0.0</PackageVersion>
+		<Version>2.0.0</Version>
 		<Authors>Marco Ribeiro</Authors>
 		<Company>Torino Informática</Company>
 		<Description>A .NET 8 SDK for Asaas Payment Gateway API</Description>
@@ -19,6 +19,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591;CS1584</NoWarn>
 		<PackageReleaseNotes>
+			* 2.0.0 - Major release; recompile and see MIGRATION.md. Monetary amounts and tax rates are decimal instead of double (32 properties in 17 DTOs). Subscription, Installment, PaymentLink, Pix, PixTransaction and RecurringPix take typed requests and return typed responses instead of object/dynamic; Delete methods return the Asaas body. Chargebacks: GetPaymentChargebackAsync, CreateChargebackDisputeAsync (multipart) and the card brand and date filters. Fiscal info certificate, payment document and payment link image uploads send multipart/form-data. Routes now follow the Asaas reference (static Pix QR Codes, /transactions/recurrings, /images, pay QR Code); the old methods are obsolete. Path identifiers are validated and percent-encoded (null, blank, "." and ".." are rejected). ApiException exposes the errors[] items and puts their descriptions in Message. RetryConfig takes effect for GET requests only (never for POST, PUT, DELETE or uploads), Timeout applies per attempt, and BaseService.GetRetryPolicy and the Polly dependency are removed.
 			* 1.5.0 - Fixed three account document endpoints (get, update and delete a file now use /v3/myAccount/documents/files/{id}; UpdateAccountDocumentAsync takes a Stream and sends multipart/form-data; removed AccountDocumentUpdateRequestDto). All service methods now forward their CancellationToken (removed the token-less ExecuteAsync overloads from BaseService). Replaced the remaining EnumMember enums with strings (AccountInfoStatus, InvoiceStatus, FiscalInfoAuthenticationType, AccountInfoCompanyType, AccountInfoPersonType, AccountInfoCityState).
 			* 1.4.1 - AccountDocumentResponsibleResponseDto.Type accepts a single string as well as an array; the Asaas sends a string despite its schema, and every account documents read failed.
 			* 1.4.0 - UploadAccountDocumentAsync now sends multipart/form-data to /v3/myAccount/documents/{id} and honours its cancellation token; the previous signature posted JSON to a path without the document id and never reached a valid endpoint. Removed AccountDocumentSaveRequestDto.

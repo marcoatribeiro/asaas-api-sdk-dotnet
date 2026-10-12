@@ -3,7 +3,8 @@ using System.Text.Json.Serialization;
 namespace Asaas.Sdk.Models;
 
 /// <summary>
-/// Invoice taxes
+/// Invoice taxes. The rates are percentages (the reference's examples are <c>iss: 2</c>, <c>pis: 0.65</c>, <c>ir: 1.5</c>), not
+/// amounts, and are <see cref="decimal"/> so that values such as 0.65 are held exactly.
 /// </summary>
 public class InvoiceTaxesDto
 {
@@ -14,38 +15,38 @@ public class InvoiceTaxesDto
     public bool RetainIss { get; set; }
 
     /// <summary>
-    /// COFINS rate
+    /// COFINS rate, as a percentage: <c>2</c> means 2%
     /// </summary>
     [JsonPropertyName("cofins")]
-    public double Cofins { get; set; }
+    public decimal Cofins { get; set; }
 
     /// <summary>
-    /// CSLL rate
+    /// CSLL rate, as a percentage: <c>2</c> means 2%
     /// </summary>
     [JsonPropertyName("csll")]
-    public double Csll { get; set; }
+    public decimal Csll { get; set; }
 
     /// <summary>
-    /// INSS rate
+    /// INSS rate, as a percentage: <c>2</c> means 2%
     /// </summary>
     [JsonPropertyName("inss")]
-    public double Inss { get; set; }
+    public decimal Inss { get; set; }
 
     /// <summary>
-    /// IR rate
+    /// IR rate, as a percentage: <c>2</c> means 2%
     /// </summary>
     [JsonPropertyName("ir")]
-    public double Ir { get; set; }
+    public decimal Ir { get; set; }
 
     /// <summary>
-    /// PIS rate
+    /// PIS rate, as a percentage: <c>2</c> means 2%
     /// </summary>
     [JsonPropertyName("pis")]
-    public double Pis { get; set; }
+    public decimal Pis { get; set; }
 
     /// <summary>
-    /// ISS rate
+    /// ISS rate, as a percentage: <c>2</c> means 2%
     /// </summary>
     [JsonPropertyName("iss")]
-    public double Iss { get; set; }
+    public decimal Iss { get; set; }
 }

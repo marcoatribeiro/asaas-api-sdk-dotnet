@@ -41,7 +41,7 @@ public class AccountInfoSaveRequestDto
     /// Billing/Monthly income
     /// </summary>
     [JsonPropertyName("incomeValue")]
-    public double? IncomeValue { get; set; }
+    public decimal? IncomeValue { get; set; }
 
     /// <summary>
     /// Account's email

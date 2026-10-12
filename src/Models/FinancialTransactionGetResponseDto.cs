@@ -23,13 +23,13 @@ public class FinancialTransactionGetResponseDto
     /// Transaction value
     /// </summary>
     [JsonPropertyName("value")]
-    public double? Value { get; set; }
+    public decimal? Value { get; set; }
 
     /// <summary>
     /// Value in account at the time of the transaction
     /// </summary>
     [JsonPropertyName("balance")]
-    public double? Balance { get; set; }
+    public decimal? Balance { get; set; }
 
     /// <summary>
     /// Transaction type (PAYMENT, PAYMENT_FEE, TRANSFER, TRANSFER_FEE, etc.)

@@ -35,7 +35,7 @@ public class AccountSaveRequestDto
     /// Billing/Monthly income
     /// </summary>
     [JsonPropertyName("incomeValue")]
-    public double IncomeValue { get; set; }
+    public decimal IncomeValue { get; set; }
 
     /// <summary>
     /// Public place

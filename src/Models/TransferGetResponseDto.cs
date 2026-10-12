@@ -35,13 +35,13 @@ public class TransferGetResponseDto
     /// Transfer amount
     /// </summary>
     [JsonPropertyName("value")]
-    public double? Value { get; set; }
+    public decimal? Value { get; set; }
 
     /// <summary>
     /// Net value minus transfer fee
     /// </summary>
     [JsonPropertyName("netValue")]
-    public double? NetValue { get; set; }
+    public decimal? NetValue { get; set; }
 
     /// <summary>
     /// Transfer status (PENDING, BANK_PROCESSING, DONE, CANCELLED, FAILED)
@@ -53,7 +53,7 @@ public class TransferGetResponseDto
     /// Transfer rate
     /// </summary>
     [JsonPropertyName("transferFee")]
-    public double? TransferFee { get; set; }
+    public decimal? TransferFee { get; set; }
 
     /// <summary>
     /// Effective date

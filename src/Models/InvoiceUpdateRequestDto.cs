@@ -29,13 +29,13 @@ public class InvoiceUpdateRequestDto
     /// Total value
     /// </summary>
     [JsonPropertyName("value")]
-    public double? Value { get; set; }
+    public decimal? Value { get; set; }
 
     /// <summary>
     /// Deductions. Deductions do not change the total value of the invoice, but they do change the ISS calculation basis.
     /// </summary>
     [JsonPropertyName("deductions")]
-    public double? Deductions { get; set; }
+    public decimal? Deductions { get; set; }
 
     /// <summary>
     /// Invoice issuance date
