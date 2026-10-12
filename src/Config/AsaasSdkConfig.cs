@@ -26,7 +26,7 @@ public class AsaasSdkConfig
     public ApiKeyAuthConfig ApiKeyAuthConfig { get; set; } = new();
 
     /// <summary>
-    /// Timeout for HTTP requests (default: 10 seconds)
+    /// Timeout of each HTTP attempt (default: 10 seconds). A retried <c>GET</c> gets a fresh timeout on every attempt.
     /// </summary>
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
 

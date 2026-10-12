@@ -1,8 +1,6 @@
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Exceptions;
 using Asaas.Sdk.Http;
-using Polly;
-using Polly.Extensions.Http;
 
 namespace Asaas.Sdk.Services;
 
@@ -109,24 +107,5 @@ public abstract class BaseService
     protected string GetBaseUrl()
     {
         return Config.BaseUrl ?? Http.Environment.Default.GetUrl();
-    }
-
-    /// <summary>
-    /// Create a retry policy for HTTP requests
-    /// </summary>
-    /// <returns>Retry policy</returns>
-    protected static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(RetryConfig config)
-    {
-        return HttpPolicyExtensions
-            .HandleTransientHttpError()
-            .OrResult(msg => (int)msg.StatusCode == 429) // Too Many Requests
-            .WaitAndRetryAsync(
-                config.MaxRetries,
-                retryAttempt => config.UseExponentialBackoff
-                    ? TimeSpan.FromMilliseconds(Math.Min(
-                        config.InitialDelayMs * Math.Pow(2, retryAttempt - 1),
-                        config.MaxDelayMs))
-                    : TimeSpan.FromMilliseconds(config.InitialDelayMs)
-            );
     }
 }

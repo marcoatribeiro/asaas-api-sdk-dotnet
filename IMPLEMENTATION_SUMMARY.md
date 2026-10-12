@@ -78,7 +78,7 @@ asaas-sdk-dotnet/
 - **Language**: C# 12
 - **HTTP Client**: System.Net.Http.HttpClient
 - **JSON Serialization**: System.Text.Json
-- **Retry Policy**: Polly 8.4.2
+- **Retry Policy**: built-in `RetryHandler`
 - **Features**: 
   - Nullable reference types enabled
   - Async/await pattern throughout
@@ -140,7 +140,7 @@ asaas-sdk-dotnet/
 ### Configuration
 - Flexible configuration system
 - Support for multiple environments (Production, Sandbox)
-- Configurable retry policies with exponential backoff
+- Configurable retry of `GET` requests with fixed or exponential backoff
 - Custom timeout settings
 - API key authentication
 
@@ -149,7 +149,7 @@ asaas-sdk-dotnet/
 - Fluent RequestBuilder API
 - Automatic JSON serialization/deserialization
 - Comprehensive error handling
-- Retry logic using Polly
+- Retry logic in `RetryHandler`
 
 ### Service Architecture
 - Abstract BaseService for shared functionality
@@ -194,7 +194,7 @@ asaas-sdk-dotnet/
 | HTTP Client | OkHttp | HttpClient |
 | JSON Library | Jackson | System.Text.Json |
 | Async Support | CompletableFuture | async/await |
-| Retry Logic | Custom | Polly |
+| Retry Logic | Custom | Built-in `RetryHandler` |
 | Configuration | Java Properties | POCO classes |
 | Code Generation | Lombok | C# 12 features |
 | API Version | 3.0.0 | 3.0.0 ✅ |
@@ -207,8 +207,6 @@ asaas-sdk-dotnet/
 - **License**: MIT
 - **Dependencies**:
   - System.Text.Json (8.0.5)
-  - Polly (8.4.2)
-  - Polly.Extensions.Http (3.0.0)
 
 ## Usage Example
 

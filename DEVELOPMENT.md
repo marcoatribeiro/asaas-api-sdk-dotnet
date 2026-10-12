@@ -201,7 +201,7 @@ Update version in `src/Asaas.Sdk/Asaas.Sdk.csproj`:
 4. **JSON Serialization** - Use System.Text.Json with camelCase naming
 5. **Error Handling** - Use custom exceptions (ApiException, ValidationException)
 6. **Logging** - Consider adding ILogger support for production use
-7. **Retry Policy** - Built-in retry with exponential backoff using Polly
+7. **Retry Policy** - `RetryHandler` retries `GET` requests only, with backoff; see the README ("Retries")
 8. **Dispose Pattern** - Properly dispose HttpClient resources
 
 ## Future Enhancements

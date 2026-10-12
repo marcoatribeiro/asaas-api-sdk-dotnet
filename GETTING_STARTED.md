@@ -12,7 +12,7 @@ A production-ready .NET 8 class library that provides:
 
 - ✅ **Type-safe API client** with full IntelliSense support
 - ✅ **Async/await patterns** for all API operations
-- ✅ **Automatic retry logic** with exponential backoff (using Polly)
+- ✅ **Automatic retry** of safe (`GET`) requests with fixed or exponential backoff; other requests are never repeated
 - ✅ **Comprehensive error handling** with custom exceptions
 - ✅ **Multiple environments** (Production, Sandbox)
 - ✅ **Fluent configuration** API
@@ -71,7 +71,7 @@ A console application demonstrating:
              ├──► RequestBuilder (Fluent API)
              ├──► ModelConverter (JSON)
              ├──► DefaultHeadersHandler
-             └──► Polly Retry Policies
+             └──► RetryHandler (GET retries, per-attempt timeout)
 ```
 
 ## 📁 File Structure
@@ -182,7 +182,7 @@ var payments = await sdk.Payment.ListPaymentsAsync();
 | HTTP Client | OkHttp | HttpClient |
 | JSON Library | Jackson | System.Text.Json |
 | Async Support | CompletableFuture | async/await |
-| Retry Logic | Custom interceptor | Polly |
+| Retry Logic | Custom interceptor | Built-in `RetryHandler` |
 | Builder Pattern | Lombok @Builder | C# properties |
 | Null Safety | @NonNull annotations | Nullable reference types |
 | Dependency Injection | Manual | Constructor injection |

@@ -1,8 +1,6 @@
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Http;
 using Asaas.Sdk.Services;
-using Polly;
-using Polly.Extensions.Http;
 using Environment = Asaas.Sdk.Http.Environment;
 
 namespace Asaas.Sdk;
@@ -192,29 +190,20 @@ public class AsaasSdk : IDisposable
     {
         _config = config ?? throw new ArgumentNullException(nameof(config));
 
-        // Create retry policy
-        var retryPolicy = HttpPolicyExtensions
-            .HandleTransientHttpError()
-            .OrResult(msg => (int)msg.StatusCode == 429) // Too Many Requests
-            .WaitAndRetryAsync(
-                config.RetryConfig.MaxRetries,
-                retryAttempt => config.RetryConfig.UseExponentialBackoff
-                    ? TimeSpan.FromMilliseconds(Math.Min(
-                        config.RetryConfig.InitialDelayMs * Math.Pow(2, retryAttempt - 1),
-                        config.RetryConfig.MaxDelayMs))
-                    : TimeSpan.FromMilliseconds(config.RetryConfig.InitialDelayMs)
-            );
-
-        // Create HTTP client with handlers
+        // Create HTTP client with handlers. The retry handler sits next to the network, so every attempt gets the headers
+        // and the timeout applies to each attempt; HttpClient.Timeout would cover the whole call, retries included.
         var handler = new DefaultHeadersHandler(config)
         {
-            InnerHandler = new HttpClientHandler()
+            InnerHandler = new RetryHandler(config.RetryConfig, config.Timeout)
+            {
+                InnerHandler = new HttpClientHandler()
+            }
         };
 
         _httpClient = new HttpClient(handler)
         {
             BaseAddress = new Uri(config.BaseUrl ?? Environment.Default.GetUrl()),
-            Timeout = config.Timeout
+            Timeout = System.Threading.Timeout.InfiniteTimeSpan
         };
 
         // Initialize services

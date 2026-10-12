@@ -174,10 +174,10 @@ var config = new AsaasSdkConfig
         ApiKeyHeader = "access_token" // Optional, defaults to "access_token"
     },
     
-    // Timeout (Optional, defaults to 100 seconds)
+    // Timeout of each attempt (Optional, defaults to 10 seconds)
     Timeout = TimeSpan.FromSeconds(30),
     
-    // Retry Configuration (Optional)
+    // Retry Configuration (Optional). Only GET requests are retried.
     RetryConfig = new RetryConfig
     {
         MaxRetries = 3,

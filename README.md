@@ -26,6 +26,7 @@ API pública de integração com a plataforma Asaas.
 - [Setting a Custom Timeout](#setting-a-custom-timeout)
 - [Sample Usage](#sample-usage)
 - [Response types](#response-types)
+- [Retries](#retries)
 - [Identifiers](#identifiers)
 - [Services](#services)
 - [Models](#models)
@@ -193,6 +194,24 @@ Most services return typed DTOs (for example `PaymentGetResponseDto`, `Subscript
 still return `dynamic` give a boxed `System.Text.Json.JsonElement`: read a field with
 `((JsonElement)result).GetProperty("id").GetString()`, because `result.id` throws a `RuntimeBinderException`. See
 [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md#reading-responses).
+
+## Retries
+
+`RetryConfig` (`MaxRetries`, `InitialDelayMs`, `MaxDelayMs`, `UseExponentialBackoff`) applies to the `AsaasSdk` client, and
+only to requests that are safe to repeat: a `GET` without a body. A `POST`, `PUT` or `DELETE` is sent **once**, however it
+fails, and so is every upload. A timeout or a connection error does not prove the server received nothing, so repeating a
+payment, transfer or Pix transaction on its own could charge twice. If one of those fails with a timeout or a 5xx, look the
+operation up (for example list payments by `externalReference`) before sending it again.
+
+A `GET` is retried on a 408, 429, 500, 502, 503 or 504 response, a connection error, or a timed-out attempt, up to
+`MaxRetries` times (`MaxRetries = 0` turns it off). The wait is `InitialDelayMs`, doubled on each retry when
+`UseExponentialBackoff` is true, and never longer than `MaxDelayMs`. When the server sends `Retry-After` or `RateLimit-Reset`
+the wait is at least that long, and a request that asks for more than `MaxDelayMs` (for example the 12-hour quota) is not
+retried, so the 429 reaches you as an `ApiException`.
+
+`AsaasSdkConfig.Timeout` (default 10 seconds) applies to each attempt, not to the whole call: a `GET` can take up to
+`(MaxRetries + 1)` timeouts plus the waits. Services created over your own `HttpClient` get retries only if that client's
+handler pipeline includes a `RetryHandler`.
 
 ## Identifiers
 

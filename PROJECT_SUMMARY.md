@@ -15,7 +15,7 @@ A complete C# / .NET 8 SDK for the Asaas Payment Gateway API has been created in
 #### Features Implemented:
 - ✅ Async/await API with full Task-based operations
 - ✅ Type-safe models with JSON serialization
-- ✅ Automatic retry with exponential backoff (Polly)
+- ✅ Automatic retry of safe (`GET`) requests with backoff (built-in `RetryHandler`)
 - ✅ Multiple environments (Production, Sandbox, Default)
 - ✅ API key authentication
 - ✅ Comprehensive error handling
@@ -96,7 +96,7 @@ Build succeeded in 1.4s
 | Config | `AsaasSdkConfig.java` | `AsaasSdkConfig.cs` | ✅ Complete |
 | HTTP Client | OkHttp3 | HttpClient | ✅ Complete |
 | JSON | Jackson | System.Text.Json | ✅ Complete |
-| Retry | Custom interceptor | Polly | ✅ Complete |
+| Retry | Custom interceptor | Built-in `RetryHandler` | ✅ Complete |
 | Async | CompletableFuture | async/await | ✅ Complete |
 | Payment Service | `PaymentService.java` | `PaymentService.cs` | ✅ Complete |
 | Customer Service | `CustomerService.java` | `CustomerService.cs` | ✅ Complete |
@@ -108,9 +108,9 @@ Build succeeded in 1.4s
    - Modern, high-performance, built-in to .NET
    - Consistent with .NET 8 best practices
 
-2. **Polly for Retry Logic** instead of custom implementation
-   - Industry standard for resilience
-   - Configurable retry policies with exponential backoff
+2. **A built-in `RetryHandler`** instead of a generic retry library
+   - Retries only requests that are safe to repeat (`GET`), never a payment, transfer or upload
+   - Honors `Retry-After` and `RateLimit-Reset`, with a per-attempt timeout
 
 3. **Async/Await Throughout** instead of synchronous methods
    - Modern C# pattern
