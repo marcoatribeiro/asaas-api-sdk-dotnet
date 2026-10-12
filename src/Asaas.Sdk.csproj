@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<PackageId>TorinoInfo.AsaasSdk</PackageId>
-		<PackageVersion>1.4.2</PackageVersion>
-		<Version>1.4.2</Version>
+		<PackageVersion>1.5.0</PackageVersion>
+		<Version>1.5.0</Version>
 		<Authors>Marco Ribeiro</Authors>
 		<Company>Torino Informática</Company>
 		<Description>A .NET 8 SDK for Asaas Payment Gateway API</Description>
@@ -19,7 +19,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591;CS1584</NoWarn>
 		<PackageReleaseNotes>
-			* 1.4.2 - Fixed three account document endpoints (get, update and delete a file now use /v3/myAccount/documents/files/{id}; UpdateAccountDocumentAsync takes a Stream and sends multipart/form-data; removed AccountDocumentUpdateRequestDto). All service methods now forward their CancellationToken (removed the token-less ExecuteAsync overloads from BaseService). Replaced the remaining EnumMember enums with strings (AccountInfoStatus, InvoiceStatus, FiscalInfoAuthenticationType, AccountInfoCompanyType, AccountInfoPersonType, AccountInfoCityState).
+			* 1.5.0 - Fixed three account document endpoints (get, update and delete a file now use /v3/myAccount/documents/files/{id}; UpdateAccountDocumentAsync takes a Stream and sends multipart/form-data; removed AccountDocumentUpdateRequestDto). All service methods now forward their CancellationToken (removed the token-less ExecuteAsync overloads from BaseService). Replaced the remaining EnumMember enums with strings (AccountInfoStatus, InvoiceStatus, FiscalInfoAuthenticationType, AccountInfoCompanyType, AccountInfoPersonType, AccountInfoCityState).
 			* 1.4.1 - AccountDocumentResponsibleResponseDto.Type accepts a single string as well as an array; the Asaas sends a string despite its schema, and every account documents read failed.
 			* 1.4.0 - UploadAccountDocumentAsync now sends multipart/form-data to /v3/myAccount/documents/{id} and honours its cancellation token; the previous signature posted JSON to a path without the document id and never reached a valid endpoint. Removed AccountDocumentSaveRequestDto.
 			* 1.3.0 - Replaced the account status and document enums with strings, since System.Text.Json does not honour EnumMemberAttribute and every SNAKE_CASE value failed to deserialize.
