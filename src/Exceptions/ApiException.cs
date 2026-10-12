@@ -1,3 +1,5 @@
+using Asaas.Sdk.Models;
+
 namespace Asaas.Sdk.Exceptions;
 
 /// <summary>
@@ -11,9 +13,16 @@ public class ApiException : Exception
     public int StatusCode { get; }
 
     /// <summary>
-    /// Response body content
+    /// Response body content, exactly as received
     /// </summary>
     public string? ResponseBody { get; }
+
+    /// <summary>
+    /// The errors the Asaas reported in the documented <c>errors[]</c> array, in response order, each with its
+    /// <see cref="ErrorItemDto.Code"/> and <see cref="ErrorItemDto.Description"/>. Empty when the response had none. Branch
+    /// on the code (for example <c>invalid_dueDate</c>) instead of matching <see cref="Exception.Message"/>.
+    /// </summary>
+    public IReadOnlyList<ErrorItemDto> Errors { get; } = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ApiException"/> class.
@@ -26,6 +35,21 @@ public class ApiException : Exception
     {
         StatusCode = statusCode;
         ResponseBody = responseBody;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApiException"/> class with the errors the Asaas reported.
+    /// </summary>
+    /// <param name="message">Error message</param>
+    /// <param name="statusCode">HTTP status code</param>
+    /// <param name="responseBody">Response body content</param>
+    /// <param name="errors">Errors parsed from the response, in order</param>
+    public ApiException(string message, int statusCode, string? responseBody, IEnumerable<ErrorItemDto> errors)
+        : base(message)
+    {
+        StatusCode = statusCode;
+        ResponseBody = responseBody;
+        Errors = errors.ToList();
     }
 
     /// <summary>

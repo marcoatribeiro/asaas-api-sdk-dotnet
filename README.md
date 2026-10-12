@@ -173,9 +173,19 @@ try
 }
 catch (ApiException ex)
 {
+    // Message holds the descriptions the Asaas sent, joined with "; "
     Console.WriteLine($"Error: {ex.Message} (Status Code: {ex.StatusCode})");
+
+    // Errors holds each documented errors[] item, so you can branch on the code instead of the text
+    foreach (var error in ex.Errors)
+    {
+        Console.WriteLine($"- {error.Code}: {error.Description}");
+    }
 }
 ```
+
+`ApiException.ResponseBody` keeps the response exactly as received. `Errors` is empty when the response had no `errors[]`
+(then `Message` is a top-level `message`/`error` string, or the HTTP reason phrase).
 
 ## Response types
 

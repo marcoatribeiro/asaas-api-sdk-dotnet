@@ -66,9 +66,10 @@ public abstract class BaseService
 
             // Handle error response
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
-            var message = ExtractErrorMessage(response, content);
-            
-            throw new ApiException(message, (int)response.StatusCode, content);
+            var (parsedMessage, errors) = ApiErrorParser.Parse(content);
+            var message = parsedMessage ?? DefaultErrorMessage(response);
+
+            throw new ApiException(message, (int)response.StatusCode, content, errors);
         }
         catch (HttpRequestException ex)
         {
@@ -94,36 +95,12 @@ public abstract class BaseService
     }
 
     /// <summary>
-    /// Extract error message from response
+    /// Message for an error response whose body says nothing useful: the HTTP reason phrase, else the status and URL
     /// </summary>
     /// <param name="response">HTTP response</param>
-    /// <param name="content">Response content</param>
     /// <returns>Error message string</returns>
-    private static string ExtractErrorMessage(HttpResponseMessage response, string? content)
-    {
-        if (!string.IsNullOrEmpty(content))
-        {
-            try
-            {
-                // Try to extract message from JSON response
-                using var doc = System.Text.Json.JsonDocument.Parse(content);
-                if (doc.RootElement.TryGetProperty("message", out var messageElement))
-                {
-                    return messageElement.GetString() ?? response.ReasonPhrase ?? "Unknown error";
-                }
-                if (doc.RootElement.TryGetProperty("error", out var errorElement))
-                {
-                    return errorElement.GetString() ?? response.ReasonPhrase ?? "Unknown error";
-                }
-            }
-            catch
-            {
-                // If JSON parsing fails, continue to default message
-            }
-        }
-
-        return response.ReasonPhrase ?? $"{(int)response.StatusCode} error in request to: {response.RequestMessage?.RequestUri}";
-    }
+    private static string DefaultErrorMessage(HttpResponseMessage response) =>
+        response.ReasonPhrase ?? $"{(int)response.StatusCode} error in request to: {response.RequestMessage?.RequestUri}";
 
     /// <summary>
     /// Build the base URL for requests
