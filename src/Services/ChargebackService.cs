@@ -20,6 +20,11 @@ public class ChargebackService : BaseService
     /// List chargebacks (<c>GET /v3/chargebacks</c>). It only filters by <paramref name="status"/>; the overload that takes
     /// <see cref="ListChargebacksParameters"/> also filters by card brand and dates, and returns a typed response.
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListChargebacksAsync(
         long? offset = null,
         long? limit = null,
@@ -83,6 +88,11 @@ public class ChargebackService : BaseService
     /// <summary>
     /// Get chargeback by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     [Obsolete("Calls GET v3/chargebacks/{id}, which the Asaas does not document. Use GetPaymentChargebackAsync, which takes a payment or installment id.")]
     public async Task<dynamic> GetChargebackAsync(
         string id,
@@ -146,6 +156,11 @@ public class ChargebackService : BaseService
     /// <summary>
     /// Request chargeback contest
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     [Obsolete("Sends JSON to POST v3/chargebacks/{id}/contest, which the Asaas does not document. Use CreateChargebackDisputeAsync, which sends the evidence files as multipart/form-data to /dispute.")]
     public async Task<dynamic> RequestChargebackContestAsync(
         string id,
@@ -163,6 +178,11 @@ public class ChargebackService : BaseService
     /// List chargeback documents. The route is not in the Asaas reference and has not been confirmed with the Asaas; the
     /// evidence of a dispute goes in <see cref="CreateChargebackDisputeAsync"/>.
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListChargebackDocumentsAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -176,6 +196,11 @@ public class ChargebackService : BaseService
     /// Upload chargeback document. The route is not in the Asaas reference and has not been confirmed with the Asaas; the
     /// evidence of a dispute goes in <see cref="CreateChargebackDisputeAsync"/>.
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> UploadChargebackDocumentAsync(
         string id,
         object document,

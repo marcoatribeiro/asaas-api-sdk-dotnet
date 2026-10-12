@@ -16,6 +16,11 @@ public class BillService : BaseService
     /// <summary>
     /// List bill payments
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListBillsAsync(
         long? offset = null,
         long? limit = null,
@@ -32,6 +37,11 @@ public class BillService : BaseService
     /// <summary>
     /// Get bill payment by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetBillAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -44,6 +54,11 @@ public class BillService : BaseService
     /// <summary>
     /// Create a bill payment
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CreateBillAsync(
         object bill,
         CancellationToken cancellationToken = default)
@@ -58,6 +73,11 @@ public class BillService : BaseService
     /// <summary>
     /// Simulate a bill payment
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> SimulateBillAsync(
         object simulation,
         CancellationToken cancellationToken = default)
@@ -72,6 +92,11 @@ public class BillService : BaseService
     /// <summary>
     /// Cancel a bill payment
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CancelBillAsync(
         string id,
         CancellationToken cancellationToken = default)

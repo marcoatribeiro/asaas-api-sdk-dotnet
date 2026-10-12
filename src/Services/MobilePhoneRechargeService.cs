@@ -16,6 +16,11 @@ public class MobilePhoneRechargeService : BaseService
     /// <summary>
     /// List mobile phone recharges
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListMobilePhoneRechargesAsync(
         long? offset = null,
         long? limit = null,
@@ -32,6 +37,11 @@ public class MobilePhoneRechargeService : BaseService
     /// <summary>
     /// Get mobile phone recharge by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetMobilePhoneRechargeAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -44,6 +54,11 @@ public class MobilePhoneRechargeService : BaseService
     /// <summary>
     /// Create a mobile phone recharge
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CreateMobilePhoneRechargeAsync(
         object recharge,
         CancellationToken cancellationToken = default)
@@ -58,6 +73,11 @@ public class MobilePhoneRechargeService : BaseService
     /// <summary>
     /// Get available providers
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetProvidersAsync(
         CancellationToken cancellationToken = default)
     {
@@ -69,6 +89,11 @@ public class MobilePhoneRechargeService : BaseService
     /// <summary>
     /// Get provider information
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetProviderAsync(
         string provider,
         CancellationToken cancellationToken = default)
@@ -81,6 +106,11 @@ public class MobilePhoneRechargeService : BaseService
     /// <summary>
     /// Cancel a mobile phone recharge
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CancelMobilePhoneRechargeAsync(
         string id,
         CancellationToken cancellationToken = default)

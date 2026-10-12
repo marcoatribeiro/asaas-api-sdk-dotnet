@@ -25,6 +25,7 @@ API pública de integração com a plataforma Asaas.
   - [Setting an Environment](#setting-an-environment)
 - [Setting a Custom Timeout](#setting-a-custom-timeout)
 - [Sample Usage](#sample-usage)
+- [Response types](#response-types)
 - [Services](#services)
 - [Models](#models)
 - [License](#license)
@@ -174,6 +175,13 @@ catch (ApiException ex)
     Console.WriteLine($"Error: {ex.Message} (Status Code: {ex.StatusCode})");
 }
 ```
+
+## Response types
+
+Most services return typed DTOs (for example `PaymentGetResponseDto`, `SubscriptionGetResponseDto`). The methods that
+still return `dynamic` give a boxed `System.Text.Json.JsonElement`: read a field with
+`((JsonElement)result).GetProperty("id").GetString()`, because `result.id` throws a `RuntimeBinderException`. See
+[USAGE_EXAMPLES.md](USAGE_EXAMPLES.md#reading-responses).
 
 ## Services
 

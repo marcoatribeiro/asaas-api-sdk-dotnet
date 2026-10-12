@@ -16,6 +16,11 @@ public class NotificationService : BaseService
     /// <summary>
     /// List notifications for a payment
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListNotificationsAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
@@ -28,6 +33,11 @@ public class NotificationService : BaseService
     /// <summary>
     /// Get notification by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetNotificationAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -40,6 +50,11 @@ public class NotificationService : BaseService
     /// <summary>
     /// Update notification configuration
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> UpdateNotificationAsync(
         string id,
         object notification,
@@ -55,6 +70,11 @@ public class NotificationService : BaseService
     /// <summary>
     /// Batch update notification configuration
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> BatchUpdateNotificationsAsync(
         string paymentId,
         object notifications,

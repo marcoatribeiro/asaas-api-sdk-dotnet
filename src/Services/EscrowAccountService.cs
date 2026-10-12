@@ -16,6 +16,11 @@ public class EscrowAccountService : BaseService
     /// <summary>
     /// Get escrow account
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetEscrowAccountAsync(
         CancellationToken cancellationToken = default)
     {
@@ -27,6 +32,11 @@ public class EscrowAccountService : BaseService
     /// <summary>
     /// List escrow account items
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListEscrowAccountItemsAsync(
         long? offset = null,
         long? limit = null,
@@ -43,6 +53,11 @@ public class EscrowAccountService : BaseService
     /// <summary>
     /// Get escrow account item by payment ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetEscrowAccountItemAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
@@ -55,6 +70,11 @@ public class EscrowAccountService : BaseService
     /// <summary>
     /// Cancel escrow account item
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CancelEscrowAccountItemAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
@@ -67,6 +87,11 @@ public class EscrowAccountService : BaseService
     /// <summary>
     /// Release escrow account item
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ReleaseEscrowAccountItemAsync(
         string paymentId,
         CancellationToken cancellationToken = default)

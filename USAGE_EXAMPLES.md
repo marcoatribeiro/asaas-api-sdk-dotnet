@@ -4,6 +4,7 @@ This document provides examples of using various Asaas SDK services.
 
 ## Table of Contents
 
+- [Reading responses](#reading-responses)
 - [Payments](#payments)
 - [Customers](#customers)
 - [Subscriptions](#subscriptions)
@@ -30,6 +31,30 @@ var config = new AsaasSdkConfig
 
 var sdk = new AsaasSdk(config);
 sdk.SetEnvironment(Environment.Sandbox); // Use sandbox for testing
+```
+
+## Reading responses
+
+Subscription, installment, payment link and Pix key/QR Code methods take typed requests and return typed responses
+(`SubscriptionGetResponseDto`, `InstallmentGetResponseDto`, ...). Status, billing type and other enum-like values are
+`string`s, so a value the Asaas adds later does not break reading.
+
+Methods that still return `dynamic` (anticipations, bills, escrow, notifications, Pix transactions, ...) hold a boxed
+`System.Text.Json.JsonElement`, **not** an object with one property per JSON field. `result.id` throws a
+`RuntimeBinderException`; read the field through `JsonElement` instead:
+
+```csharp
+using System.Text.Json;
+
+dynamic result = await sdk.Anticipation.GetConfigurationAsync();
+
+JsonElement json = result;                       // or: (JsonElement)result
+string? id = json.GetProperty("id").GetString();
+
+if (json.TryGetProperty("status", out var status))
+{
+    Console.WriteLine(status.GetString());
+}
 ```
 
 ## Payments
@@ -106,30 +131,39 @@ var customers = await sdk.Customer.ListCustomersAsync(
 ### Create a Subscription
 
 ```csharp
-var subscription = await sdk.Subscription.CreateSubscriptionAsync(new
+var subscription = await sdk.Subscription.CreateSubscriptionAsync(new SubscriptionSaveRequestDto
 {
-    customer = "cus_000000000001",
-    billingType = "CREDIT_CARD",
-    value = 49.90,
-    nextDueDate = DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd"),
-    cycle = "MONTHLY",
-    description = "Monthly subscription"
+    Customer = "cus_000000000001",
+    BillingType = "CREDIT_CARD",
+    Value = 49.90m,
+    NextDueDate = DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd"),
+    Cycle = "MONTHLY",
+    Description = "Monthly subscription"
 });
+
+Console.WriteLine($"{subscription.Id}: {subscription.Status}");
 ```
 
 ### List Subscriptions
 
 ```csharp
-var subscriptions = await sdk.Subscription.ListSubscriptionsAsync(
-    offset: 0,
-    limit: 10
-);
+var subscriptions = await sdk.Subscription.ListSubscriptionsAsync(new ListSubscriptionsParameters
+{
+    Limit = 10,
+    Status = "ACTIVE"
+});
+
+foreach (var item in subscriptions.Data)
+{
+    Console.WriteLine($"{item.Id}: {item.Value} {item.Cycle}");
+}
 ```
 
 ### Cancel a Subscription
 
 ```csharp
-await sdk.Subscription.DeleteSubscriptionAsync("sub_000000000001");
+var removed = await sdk.Subscription.DeleteSubscriptionAsync("sub_000000000001");
+Console.WriteLine(removed.Deleted);
 ```
 
 ## PIX
@@ -137,22 +171,22 @@ await sdk.Subscription.DeleteSubscriptionAsync("sub_000000000001");
 ### Create PIX Key
 
 ```csharp
-var pixKey = await sdk.Pix.CreatePixKeyAsync(new
-{
-    type = "EVP",
-    addressKey = null // Auto-generate EVP key
-});
+// Only a random (EVP) key can be created
+var pixKey = await sdk.Pix.CreateKeyAsync(new PixAddressKeySaveRequestDto { Type = "EVP" });
+Console.WriteLine($"{pixKey.Id}: {pixKey.Status}");
 ```
 
 ### Create PIX QR Code
 
 ```csharp
-var qrCode = await sdk.Pix.CreateQrCodeAsync(new
+var qrCode = await sdk.Pix.CreateQrCodeAsync(new PixQrCodeSaveRequestDto
 {
-    addressKey = "your-pix-key",
-    description = "Payment via PIX",
-    value = 50.00
+    AddressKey = "your-pix-key",
+    Description = "Payment via PIX",
+    Value = 50.00m
 });
+
+Console.WriteLine(qrCode.Payload);
 ```
 
 ### Process PIX Transaction
@@ -325,14 +359,16 @@ var transactions = await sdk.FinancialTransaction.ListFinancialTransactionsAsync
 ### Create Payment Link
 
 ```csharp
-var paymentLink = await sdk.PaymentLink.CreatePaymentLinkAsync(new
+var paymentLink = await sdk.PaymentLink.CreatePaymentLinkAsync(new PaymentLinkSaveRequestDto
 {
-    name = "Product Purchase",
-    description = "Purchase of Product XYZ",
-    billingType = "UNDEFINED",
-    chargeType = "DETACHED",
-    value = 99.90
+    Name = "Product Purchase",
+    Description = "Purchase of Product XYZ",
+    BillingType = "UNDEFINED",
+    ChargeType = "DETACHED",
+    Value = 99.90m
 });
+
+Console.WriteLine(paymentLink.Url);
 ```
 
 ## Anticipations

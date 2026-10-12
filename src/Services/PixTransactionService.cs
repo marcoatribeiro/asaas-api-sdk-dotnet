@@ -16,6 +16,11 @@ public class PixTransactionService : BaseService
     /// <summary>
     /// Create a PIX transaction
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CreateTransactionAsync(
         object transaction,
         CancellationToken cancellationToken = default)
@@ -30,6 +35,11 @@ public class PixTransactionService : BaseService
     /// <summary>
     /// Get PIX transaction by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetTransactionAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -42,6 +52,11 @@ public class PixTransactionService : BaseService
     /// <summary>
     /// List PIX transactions
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListTransactionsAsync(
         long? offset = null,
         long? limit = null,
@@ -58,6 +73,11 @@ public class PixTransactionService : BaseService
     /// <summary>
     /// Cancel a PIX transaction
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CancelTransactionAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -70,6 +90,11 @@ public class PixTransactionService : BaseService
     /// <summary>
     /// Decode a PIX QR Code
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> DecodeQrCodeAsync(
         object payload,
         CancellationToken cancellationToken = default)

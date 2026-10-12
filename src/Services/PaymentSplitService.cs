@@ -16,6 +16,11 @@ public class PaymentSplitService : BaseService
     /// <summary>
     /// List payment splits
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListPaymentSplitsAsync(
         long? offset = null,
         long? limit = null,
@@ -32,6 +37,11 @@ public class PaymentSplitService : BaseService
     /// <summary>
     /// Get payment split by payment ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetPaymentSplitAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
@@ -44,6 +54,11 @@ public class PaymentSplitService : BaseService
     /// <summary>
     /// Create or update payment split
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> SavePaymentSplitAsync(
         string paymentId,
         object split,

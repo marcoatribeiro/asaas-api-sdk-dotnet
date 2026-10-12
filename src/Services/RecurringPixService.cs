@@ -16,6 +16,11 @@ public class RecurringPixService : BaseService
     /// <summary>
     /// List recurring PIX transactions
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListRecurringTransactionsAsync(
         long? offset = null,
         long? limit = null,
@@ -32,6 +37,11 @@ public class RecurringPixService : BaseService
     /// <summary>
     /// Get recurring PIX transaction by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetRecurringTransactionAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -44,6 +54,11 @@ public class RecurringPixService : BaseService
     /// <summary>
     /// List items of a recurring PIX transaction
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListRecurringTransactionItemsAsync(
         string id,
         long? offset = null,
@@ -61,6 +76,11 @@ public class RecurringPixService : BaseService
     /// <summary>
     /// Get recurring PIX transaction item by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetRecurringTransactionItemAsync(
         string id,
         string itemId,
@@ -74,6 +94,11 @@ public class RecurringPixService : BaseService
     /// <summary>
     /// Cancel a recurring PIX transaction
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CancelRecurringTransactionAsync(
         string id,
         CancellationToken cancellationToken = default)

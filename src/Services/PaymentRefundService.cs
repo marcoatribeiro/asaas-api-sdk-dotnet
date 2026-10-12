@@ -16,6 +16,11 @@ public class PaymentRefundService : BaseService
     /// <summary>
     /// Refund payment
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> RefundPaymentAsync(
         string paymentId,
         object refundData,
@@ -31,6 +36,11 @@ public class PaymentRefundService : BaseService
     /// <summary>
     /// Get refund status
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetRefundStatusAsync(
         string paymentId,
         CancellationToken cancellationToken = default)

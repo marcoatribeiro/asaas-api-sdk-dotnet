@@ -65,6 +65,11 @@ public class SandboxActionsService : BaseService
     /// <summary>
     /// (Sandbox only) Simulate PIX transaction received
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> SimulatePixTransactionReceivedAsync(
         object transaction,
         CancellationToken cancellationToken = default)

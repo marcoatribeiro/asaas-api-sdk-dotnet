@@ -16,6 +16,11 @@ public class CreditBureauReportService : BaseService
     /// <summary>
     /// List credit bureau reports
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListCreditBureauReportsAsync(
         long? offset = null,
         long? limit = null,
@@ -32,6 +37,11 @@ public class CreditBureauReportService : BaseService
     /// <summary>
     /// Get credit bureau report by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetCreditBureauReportAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -44,6 +54,11 @@ public class CreditBureauReportService : BaseService
     /// <summary>
     /// Request a credit bureau report
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CreateCreditBureauReportAsync(
         object report,
         CancellationToken cancellationToken = default)

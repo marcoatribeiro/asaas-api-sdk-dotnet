@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Http;
+using Asaas.Sdk.Models;
 
 namespace Asaas.Sdk.Services;
 
@@ -15,9 +16,9 @@ public class PaymentLinkService : BaseService
     }
 
     /// <summary>
-    /// List payment links
+    /// List payment links (<c>GET /v3/paymentLinks</c>)
     /// </summary>
-    public async Task<dynamic> ListPaymentLinksAsync(
+    public async Task<PaymentLinkListResponseDto> ListPaymentLinksAsync(
         long? offset = null,
         long? limit = null,
         CancellationToken cancellationToken = default)
@@ -26,66 +27,119 @@ public class PaymentLinkService : BaseService
             .AddQueryParam("offset", offset)
             .AddQueryParam("limit", limit);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PaymentLinkListResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Get payment link by ID
+    /// List payment links (<c>GET /v3/paymentLinks</c>), with the filters the Asaas documents
     /// </summary>
-    public async Task<dynamic> GetPaymentLinkAsync(
+    /// <param name="parameters">Pagination and filters. Those left null are not sent.</param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
+    public async Task<PaymentLinkListResponseDto> ListPaymentLinksAsync(
+        ListPaymentLinksParameters parameters,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(parameters);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, "v3/paymentLinks")
+            .AddQueryParam("offset", parameters.Offset)
+            .AddQueryParam("limit", parameters.Limit)
+            .AddQueryParam("active", QueryFormat.Bool(parameters.Active))
+            .AddQueryParam("includeDeleted", QueryFormat.Bool(parameters.IncludeDeleted))
+            .AddQueryParam("name", parameters.Name)
+            .AddQueryParam("externalReference", parameters.ExternalReference);
+
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PaymentLinkListResponseDto>(request, cancellationToken);
+    }
+
+    /// <summary>
+    /// Get payment link by ID (<c>GET /v3/paymentLinks/{id}</c>)
+    /// </summary>
+    public async Task<PaymentLinkGetResponseDto> GetPaymentLinkAsync(
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{id}");
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{Uri.EscapeDataString(id)}");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PaymentLinkGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Create a payment link
+    /// Create a payment link (<c>POST /v3/paymentLinks</c>)
     /// </summary>
-    public async Task<dynamic> CreatePaymentLinkAsync(
-        object paymentLink,
+    public async Task<PaymentLinkGetResponseDto> CreatePaymentLinkAsync(
+        PaymentLinkSaveRequestDto paymentLink,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(paymentLink);
+
         var requestBuilder = new RequestBuilder(HttpMethod.Post, "v3/paymentLinks")
             .SetBody(paymentLink);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PaymentLinkGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Update a payment link
+    /// Update a payment link (<c>PUT /v3/paymentLinks/{id}</c>). Properties left null are not sent.
     /// </summary>
-    public async Task<dynamic> UpdatePaymentLinkAsync(
+    public async Task<PaymentLinkGetResponseDto> UpdatePaymentLinkAsync(
         string id,
-        object paymentLink,
+        PaymentLinkUpdateRequestDto paymentLink,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/paymentLinks/{id}")
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        ArgumentNullException.ThrowIfNull(paymentLink);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/paymentLinks/{Uri.EscapeDataString(id)}")
             .SetBody(paymentLink);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PaymentLinkGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Delete a payment link
+    /// Delete a payment link (<c>DELETE /v3/paymentLinks/{id}</c>)
     /// </summary>
-    public async Task DeletePaymentLinkAsync(
+    public async Task<PaymentLinkDeleteResponseDto> DeletePaymentLinkAsync(
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/paymentLinks/{id}");
-        var request = requestBuilder.Build(GetBaseUrl());
-        await ExecuteAsync(request, cancellationToken);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/paymentLinks/{Uri.EscapeDataString(id)}");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PaymentLinkDeleteResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// List files for a payment link
+    /// List the images of a payment link (<c>GET /v3/paymentLinks/{id}/images</c>)
     /// </summary>
+    public async Task<PaymentLinkFileListResponseDto> ListPaymentLinkImagesAsync(
+        string id,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{Uri.EscapeDataString(id)}/images");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<PaymentLinkFileListResponseDto>(request, cancellationToken);
+    }
+
+    /// <summary>
+    /// List files for a payment link. Calls <c>GET /v3/paymentLinks/{id}/files</c>, which the Asaas does not document.
+    /// The value is a boxed <see cref="System.Text.Json.JsonElement"/>.
+    /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
+    [Obsolete("Calls a route the Asaas does not document. Use ListPaymentLinkImagesAsync, which calls /images.")]
     public async Task<dynamic> ListPaymentLinkFilesAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -108,7 +162,7 @@ public class PaymentLinkService : BaseService
     /// <param name="contentType">Media type of the image (e.g. <c>image/png</c>)</param>
     /// <param name="main">Whether this is the main image of the link. Omitted from the request when null.</param>
     /// <param name="cancellationToken">Token that cancels the request</param>
-    public async Task<dynamic> AddPaymentLinkImageAsync(
+    public async Task<PaymentLinkFileGetResponseDto> AddPaymentLinkImageAsync(
         string id,
         Stream image,
         string fileName,
@@ -132,12 +186,17 @@ public class PaymentLinkService : BaseService
             .SetMultipartContent(content);
 
         using var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<dynamic>(request, cancellationToken);
+        return await ExecuteAsync<PaymentLinkFileGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
     /// Upload a file to a payment link
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     [Obsolete("Sends JSON to a route the Asaas does not document. Use AddPaymentLinkImageAsync, which sends multipart/form-data to /images.")]
     public async Task<dynamic> UploadPaymentLinkFileAsync(
         string id,

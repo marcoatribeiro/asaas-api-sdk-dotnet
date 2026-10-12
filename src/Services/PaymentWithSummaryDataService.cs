@@ -16,6 +16,11 @@ public class PaymentWithSummaryDataService : BaseService
     /// <summary>
     /// List payments with summary data
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListPaymentsWithSummaryDataAsync(
         string? customer = null,
         string? status = null,
@@ -41,6 +46,11 @@ public class PaymentWithSummaryDataService : BaseService
     /// <summary>
     /// Get payment summary
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetPaymentSummaryAsync(
         string? customer = null,
         string? status = null,

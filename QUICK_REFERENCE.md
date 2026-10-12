@@ -89,13 +89,13 @@ var customer = await sdk.Customer.CreateCustomerAsync(new
 
 ### Create Subscription
 ```csharp
-var subscription = await sdk.Subscription.CreateSubscriptionAsync(new
+var subscription = await sdk.Subscription.CreateSubscriptionAsync(new SubscriptionSaveRequestDto
 {
-    customer = "cus_000000000001",
-    billingType = "CREDIT_CARD",
-    value = 49.90,
-    nextDueDate = DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd"),
-    cycle = "MONTHLY"
+    Customer = "cus_000000000001",
+    BillingType = "CREDIT_CARD",
+    Value = 49.90m,
+    NextDueDate = DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd"),
+    Cycle = "MONTHLY"
 });
 ```
 

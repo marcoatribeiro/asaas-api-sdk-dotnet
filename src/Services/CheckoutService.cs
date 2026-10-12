@@ -16,6 +16,11 @@ public class CheckoutService : BaseService
     /// <summary>
     /// Create a checkout session
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CreateCheckoutSessionAsync(
         object session,
         CancellationToken cancellationToken = default)
@@ -30,6 +35,11 @@ public class CheckoutService : BaseService
     /// <summary>
     /// Get checkout session by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetCheckoutSessionAsync(
         string id,
         CancellationToken cancellationToken = default)

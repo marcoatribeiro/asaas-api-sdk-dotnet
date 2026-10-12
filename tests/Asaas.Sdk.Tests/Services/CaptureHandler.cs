@@ -27,6 +27,7 @@ internal sealed class CapturedRequest
     public required string Path { get; init; }
     public string? MediaType { get; init; }
     public string Query { get; init; } = "";
+    public string Body { get; init; } = "";
     public IReadOnlyList<string> PartNames => _parts.Select(part => part.Name).ToList();
 
     public void AddPart(string name, string? fileName, string? contentType, byte[] bytes) =>
@@ -55,12 +56,17 @@ internal sealed class CaptureHandler(HttpStatusCode status = HttpStatusCode.OK, 
     {
         cancellationToken.ThrowIfCancellationRequested();
 
+        var body = request.Content is null || request.Content is MultipartFormDataContent
+            ? ""
+            : await request.Content.ReadAsStringAsync(cancellationToken);
+
         var captured = new CapturedRequest
         {
             Method = request.Method,
             Path = request.RequestUri!.GetComponents(UriComponents.Path | UriComponents.KeepDelimiter, UriFormat.UriEscaped),
             MediaType = request.Content?.Headers.ContentType?.MediaType,
-            Query = request.RequestUri.Query
+            Query = request.RequestUri.Query,
+            Body = body
         };
 
         if (request.Content is MultipartFormDataContent multipart)

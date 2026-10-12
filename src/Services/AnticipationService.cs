@@ -16,6 +16,11 @@ public class AnticipationService : BaseService
     /// <summary>
     /// List anticipations
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListAnticipationsAsync(
         long? offset = null,
         long? limit = null,
@@ -32,6 +37,11 @@ public class AnticipationService : BaseService
     /// <summary>
     /// Get anticipation by ID
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetAnticipationAsync(
         string id,
         CancellationToken cancellationToken = default)
@@ -44,6 +54,11 @@ public class AnticipationService : BaseService
     /// <summary>
     /// Create an anticipation
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> CreateAnticipationAsync(
         object anticipation,
         CancellationToken cancellationToken = default)
@@ -58,6 +73,11 @@ public class AnticipationService : BaseService
     /// <summary>
     /// Simulate an anticipation
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> SimulateAnticipationAsync(
         object simulation,
         CancellationToken cancellationToken = default)
@@ -72,6 +92,11 @@ public class AnticipationService : BaseService
     /// <summary>
     /// Get anticipation configuration
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetConfigurationAsync(
         CancellationToken cancellationToken = default)
     {
@@ -83,6 +108,11 @@ public class AnticipationService : BaseService
     /// <summary>
     /// Update anticipation configuration
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> UpdateConfigurationAsync(
         object configuration,
         CancellationToken cancellationToken = default)
@@ -97,6 +127,11 @@ public class AnticipationService : BaseService
     /// <summary>
     /// Get anticipation limits
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> GetLimitsAsync(
         CancellationToken cancellationToken = default)
     {

@@ -17,6 +17,11 @@ public class PaymentDocumentService : BaseService
     /// <summary>
     /// List payment documents
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> ListPaymentDocumentsAsync(
         string paymentId,
         CancellationToken cancellationToken = default)
@@ -39,6 +44,11 @@ public class PaymentDocumentService : BaseService
     /// or <c>OTHER</c>
     /// </param>
     /// <param name="cancellationToken">Token that cancels the request</param>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> UploadPaymentDocumentAsync(
         string paymentId,
         Stream file,
@@ -72,6 +82,11 @@ public class PaymentDocumentService : BaseService
     /// <summary>
     /// Upload payment document
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     [Obsolete("Sends JSON, but the Asaas only accepts multipart/form-data with a binary file. Use the overload that takes a Stream, fileName, contentType, availableAfterPayment and type.")]
     public async Task<dynamic> UploadPaymentDocumentAsync(
         string paymentId,
@@ -88,6 +103,11 @@ public class PaymentDocumentService : BaseService
     /// <summary>
     /// Update payment document
     /// </summary>
+    /// <returns>
+    /// A boxed <see cref="System.Text.Json.JsonElement"/> holding the response body, not an object with one property per
+    /// JSON field: <c>result.id</c> throws a <c>RuntimeBinderException</c>. Read it with
+    /// <c>((JsonElement)result).GetProperty("id").GetString()</c>.
+    /// </returns>
     public async Task<dynamic> UpdatePaymentDocumentAsync(
         string paymentId,
         string documentId,
