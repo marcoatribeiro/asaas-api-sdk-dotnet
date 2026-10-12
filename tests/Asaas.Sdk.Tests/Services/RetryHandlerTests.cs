@@ -464,6 +464,40 @@ public sealed class RetryHandlerTests
     }
 
     [Fact]
+    public async Task BodyThatFailsToRead_ShouldDisposeTheResponse_AndBeRetriedLikeANetworkError()
+    {
+        // Arrange: the connection drops while the body is read, then the retry succeeds
+        var broken = new DisposeTrackingContent(new IOException("connection reset"));
+        var rig = Build(Config(maxRetries: 1), script:
+            [(_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) { Content = broken }), Respond(HttpStatusCode.OK, """{ "balance": 3 }""")]);
+
+        // Act
+        var balance = await rig.Finance.GetBalanceAsync(Ct);
+
+        // Assert
+        Assert.Equal(3, balance.Balance);
+        Assert.Equal(2, rig.Inner.Attempts);
+        Assert.True(broken.Disposed);
+    }
+
+    [Fact]
+    public async Task PostWhoseBodyFailsToRead_ShouldDisposeTheResponse_AndNotBeRetried()
+    {
+        // Arrange
+        var broken = new DisposeTrackingContent(new IOException("connection reset"));
+        var rig = Build(Config(maxRetries: 2), script: (_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) { Content = broken }));
+
+        // Act
+        var exception = await Assert.ThrowsAsync<ApiException>(
+            () => new AccountInfoService(rig.Client, rig.Sdk).UpdatePaymentEscrowConfigAsync(new() { DaysToExpire = 1 }, Ct));
+
+        // Assert
+        Assert.Equal(0, exception.StatusCode);
+        Assert.Equal(1, rig.Inner.Attempts);
+        Assert.True(broken.Disposed);
+    }
+
+    [Fact]
     public async Task RetriedGets_ShouldKeepTheirMethodUriAndHeaders()
     {
         // Arrange
@@ -599,11 +633,12 @@ public sealed class RetryHandlerTests
         }
     }
 
-    private sealed class DisposeTrackingContent : HttpContent
+    private sealed class DisposeTrackingContent(Exception? readFailure = null) : HttpContent
     {
         public bool Disposed { get; private set; }
 
-        protected override Task SerializeToStreamAsync(Stream stream, System.Net.TransportContext? context) => Task.CompletedTask;
+        protected override Task SerializeToStreamAsync(Stream stream, System.Net.TransportContext? context) =>
+            readFailure is null ? Task.CompletedTask : Task.FromException(readFailure);
 
         protected override bool TryComputeLength(out long length)
         {

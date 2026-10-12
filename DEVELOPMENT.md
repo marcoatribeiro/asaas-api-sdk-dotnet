@@ -74,8 +74,11 @@ dotnet restore
 # Build in Release mode
 dotnet build --configuration Release
 
-# Run tests (when available)
+# Run tests
 dotnet test
+
+# Run tests with code coverage (writes a Cobertura report to TestResults/)
+dotnet test --project tests/Asaas.Sdk.Tests -- --coverage --coverage-output-format cobertura
 
 # Create NuGet package
 dotnet pack --configuration Release

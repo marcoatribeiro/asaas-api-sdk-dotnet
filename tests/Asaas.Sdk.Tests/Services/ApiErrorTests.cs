@@ -127,6 +127,17 @@ public sealed class ApiErrorTests
     }
 
     [Fact]
+    public async Task StatusWithoutAReasonPhrase_ShouldNameTheStatusAndTheUrl()
+    {
+        // Act: 499 has no standard reason phrase
+        var exception = await FailAsync((HttpStatusCode)499, "");
+
+        // Assert
+        Assert.Equal("499 error in request to: https://api.example.invalid/v3/finance/balance", exception.Message);
+        Assert.Equal(499, exception.StatusCode);
+    }
+
+    [Fact]
     public void ExistingConstructors_ShouldStillWork_WithNoErrors()
     {
         // Act
