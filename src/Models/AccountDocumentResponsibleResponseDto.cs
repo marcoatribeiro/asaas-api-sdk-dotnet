@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Asaas.Sdk.Http;
 
 namespace Asaas.Sdk.Models;
 
@@ -19,6 +20,11 @@ public class AccountDocumentResponsibleResponseDto
     /// <c>BANK_ACCOUNT_OWNER_EMANCIPATION_AGE</c>, <c>BANK_ACCOUNT_OWNER</c>, <c>CUSTOM</c>, <c>DIRECTOR</c>,
     /// <c>INDIVIDUAL_COMPANY</c>, <c>LIMITED_COMPANY</c>, <c>MEI</c> or <c>PARTNER</c>.
     /// </summary>
+    /// <remarks>
+    /// The Asaas reference declares this field as an array, but the API answers with a single string
+    /// (e.g. <c>"ASSOCIATION"</c>). Both shapes are read into this list.
+    /// </remarks>
     [JsonPropertyName("type")]
+    [JsonConverter(typeof(SingleOrArrayStringListConverter))]
     public List<string>? Type { get; set; }
 }
