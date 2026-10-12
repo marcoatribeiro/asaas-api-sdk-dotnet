@@ -11,7 +11,7 @@ public class FiscalInfoMunicipalOptionsGetResponseDto
     /// Type of authentication required at city hall
     /// </summary>
     [JsonPropertyName("authenticationType")]
-    public FiscalInfoAuthenticationType? AuthenticationType { get; set; }
+    public string? AuthenticationType { get; set; }
 
     /// <summary>
     /// Whether or not it supports the cancellation of invoices automatically at your city hall

@@ -11,7 +11,7 @@ public class AccountInfoSaveRequestDto
     /// Person Type
     /// </summary>
     [JsonPropertyName("personType")]
-    public AccountInfoPersonType? PersonType { get; set; }
+    public string? PersonType { get; set; }
 
     /// <summary>
     /// CPF or CNPJ of the account owner
@@ -29,7 +29,7 @@ public class AccountInfoSaveRequestDto
     /// Type of company (only when Legal Entity)
     /// </summary>
     [JsonPropertyName("companyType")]
-    public AccountInfoCompanyType? CompanyType { get; set; }
+    public string? CompanyType { get; set; }
 
     /// <summary>
     /// Company Name

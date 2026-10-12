@@ -47,5 +47,5 @@ public class AccountInfoCityDto
     /// State abbreviation (SP, RJ, SC, ...)
     /// </summary>
     [JsonPropertyName("state")]
-    public AccountInfoCityState? State { get; set; }
+    public string? State { get; set; }
 }

@@ -23,7 +23,7 @@ public class InvoiceGetResponseDto
     /// Invoice status
     /// </summary>
     [JsonPropertyName("status")]
-    public InvoiceStatus? Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// Unique customer identifier
