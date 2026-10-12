@@ -32,15 +32,22 @@ public class AccountDocumentService : BaseService
     }
 
     /// <summary>
-    /// Get account document by ID
+    /// Get a sent document file (<c>GET /v3/myAccount/documents/files/{id}</c>).
     /// </summary>
+    /// <param name="id">
+    /// Identifier of the file, as returned after an upload. It is not the document group id listed by
+    /// <see cref="ListAccountDocumentsAsync"/>.
+    /// </param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
     public async Task<AccountDocumentGetResponseDto> GetAccountDocumentAsync(
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/myAccount/documents/{id}");
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountDocumentGetResponseDto>(request);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/myAccount/documents/files/{Uri.EscapeDataString(id)}");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<AccountDocumentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
@@ -94,29 +101,57 @@ public class AccountDocumentService : BaseService
     }
 
     /// <summary>
-    /// Update an account document
+    /// Replace a sent document file (<c>POST /v3/myAccount/documents/files/{id}</c>, multipart/form-data).
     /// </summary>
+    /// <param name="id">
+    /// Identifier of the file, as returned after an upload. It is not the document group id listed by
+    /// <see cref="ListAccountDocumentsAsync"/>.
+    /// </param>
+    /// <param name="documentFile">Content of the new file. It is read once, and disposed together with the request.</param>
+    /// <param name="fileName">File name sent with the content</param>
+    /// <param name="contentType">Media type of the file (e.g. <c>application/pdf</c>)</param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
     public async Task<AccountDocumentGetResponseDto> UpdateAccountDocumentAsync(
         string id,
-        AccountDocumentUpdateRequestDto document,
+        Stream documentFile,
+        string fileName,
+        string contentType,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/myAccount/documents/{id}/update")
-            .SetBody(document);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        ArgumentNullException.ThrowIfNull(documentFile);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
 
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountDocumentGetResponseDto>(request);
+        using var content = new MultipartFormDataContent();
+
+        var fileContent = new StreamContent(documentFile);
+        fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+        content.Add(fileContent, "documentFile", fileName);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/myAccount/documents/files/{Uri.EscapeDataString(id)}")
+            .SetMultipartContent(content);
+
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<AccountDocumentGetResponseDto>(request, cancellationToken);
     }
 
     /// <summary>
-    /// Delete an account document
+    /// Delete a sent document file (<c>DELETE /v3/myAccount/documents/files/{id}</c>).
     /// </summary>
+    /// <param name="id">
+    /// Identifier of the file, as returned after an upload. It is not the document group id listed by
+    /// <see cref="ListAccountDocumentsAsync"/>.
+    /// </param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
     public async Task<AccountDocumentDeleteResponseDto> DeleteAccountDocumentAsync(
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/myAccount/documents/{id}");
-        var request = requestBuilder.Build(GetBaseUrl());
-        return await ExecuteAsync<AccountDocumentDeleteResponseDto>(request);
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/myAccount/documents/files/{Uri.EscapeDataString(id)}");
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<AccountDocumentDeleteResponseDto>(request, cancellationToken);
     }
 }
