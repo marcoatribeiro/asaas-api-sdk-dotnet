@@ -43,9 +43,7 @@ public class AccountDocumentService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/myAccount/documents/files/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/myAccount/documents/files/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<AccountDocumentGetResponseDto>(request, cancellationToken);
     }
@@ -77,7 +75,7 @@ public class AccountDocumentService : BaseService
         string? type = null,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        var idSegment = PathSegment.Escape(id);
         ArgumentNullException.ThrowIfNull(documentFile);
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
         ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
@@ -93,7 +91,7 @@ public class AccountDocumentService : BaseService
             content.Add(new StringContent(type), "type");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/myAccount/documents/{Uri.EscapeDataString(id)}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/myAccount/documents/{idSegment}")
             .SetMultipartContent(content);
 
         using var request = requestBuilder.Build(GetBaseUrl());
@@ -118,7 +116,7 @@ public class AccountDocumentService : BaseService
         string contentType,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        var idSegment = PathSegment.Escape(id);
         ArgumentNullException.ThrowIfNull(documentFile);
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
         ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
@@ -129,7 +127,7 @@ public class AccountDocumentService : BaseService
         fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
         content.Add(fileContent, "documentFile", fileName);
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/myAccount/documents/files/{Uri.EscapeDataString(id)}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/myAccount/documents/files/{idSegment}")
             .SetMultipartContent(content);
 
         using var request = requestBuilder.Build(GetBaseUrl());
@@ -148,9 +146,7 @@ public class AccountDocumentService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/myAccount/documents/files/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/myAccount/documents/files/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<AccountDocumentDeleteResponseDto>(request, cancellationToken);
     }

@@ -27,6 +27,7 @@ internal sealed class CapturedRequest
     public required string Path { get; init; }
     public string? MediaType { get; init; }
     public string Query { get; init; } = "";
+    public string AbsoluteUri { get; init; } = "";
     public string Body { get; init; } = "";
     public IReadOnlyList<string> PartNames => _parts.Select(part => part.Name).ToList();
 
@@ -66,6 +67,7 @@ internal sealed class CaptureHandler(HttpStatusCode status = HttpStatusCode.OK, 
             Path = request.RequestUri!.GetComponents(UriComponents.Path | UriComponents.KeepDelimiter, UriFormat.UriEscaped),
             MediaType = request.Content?.Headers.ContentType?.MediaType,
             Query = request.RequestUri.Query,
+            AbsoluteUri = request.RequestUri.AbsoluteUri,
             Body = body
         };
 

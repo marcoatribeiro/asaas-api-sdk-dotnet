@@ -76,10 +76,8 @@ public class ChargebackService : BaseService
         string paymentOrInstallmentId,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(paymentOrInstallmentId);
-
         var requestBuilder = new RequestBuilder(
-            HttpMethod.Get, $"v3/payments/{Uri.EscapeDataString(paymentOrInstallmentId)}/chargeback");
+            HttpMethod.Get, $"v3/payments/{PathSegment.Escape(paymentOrInstallmentId)}/chargeback");
 
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentChargebackResponseDto>(request, cancellationToken);
@@ -98,7 +96,7 @@ public class ChargebackService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/chargebacks/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/chargebacks/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -121,7 +119,7 @@ public class ChargebackService : BaseService
         IEnumerable<(Stream Content, string FileName, string ContentType)> files,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(chargebackId);
+        var chargebackIdSegment = PathSegment.Escape(chargebackId);
         ArgumentNullException.ThrowIfNull(files);
 
         var fileList = files.ToList();
@@ -146,7 +144,7 @@ public class ChargebackService : BaseService
             content.Add(part, "files", fileName);
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/chargebacks/{Uri.EscapeDataString(chargebackId)}/dispute")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/chargebacks/{chargebackIdSegment}/dispute")
             .SetMultipartContent(content);
 
         using var request = requestBuilder.Build(GetBaseUrl());
@@ -167,7 +165,7 @@ public class ChargebackService : BaseService
         object contest,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/chargebacks/{id}/contest")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/chargebacks/{PathSegment.Escape(id)}/contest")
             .SetBody(contest);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -187,7 +185,7 @@ public class ChargebackService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/chargebacks/{id}/documents");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/chargebacks/{PathSegment.Escape(id)}/documents");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -206,7 +204,7 @@ public class ChargebackService : BaseService
         object document,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/chargebacks/{id}/documents")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/chargebacks/{PathSegment.Escape(id)}/documents")
             .SetBody(document);
 
         var request = requestBuilder.Build(GetBaseUrl());

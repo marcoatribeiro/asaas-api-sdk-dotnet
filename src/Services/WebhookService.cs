@@ -55,7 +55,7 @@ public class WebhookService : BaseService
             throw new ValidationException("Webhook ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/webhooks/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/webhooks/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<WebhookConfigGetResponseDto>(request, cancellationToken);
     }
@@ -114,7 +114,7 @@ public class WebhookService : BaseService
             throw new ValidationException("Webhook data is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/webhooks/{id}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/webhooks/{PathSegment.Escape(id)}")
             .SetBody(webhook);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -136,7 +136,7 @@ public class WebhookService : BaseService
             throw new ValidationException("Webhook ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/webhooks/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/webhooks/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<WebhookConfigDeleteResponseDto>(request, cancellationToken);
     }

@@ -61,9 +61,7 @@ public class PixTransactionService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PixTransactionGetResponseDto>(request, cancellationToken);
     }
@@ -114,9 +112,7 @@ public class PixTransactionService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/{Uri.EscapeDataString(id)}/cancel");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/{PathSegment.Escape(id)}/cancel");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PixTransactionGetResponseDto>(request, cancellationToken);
     }

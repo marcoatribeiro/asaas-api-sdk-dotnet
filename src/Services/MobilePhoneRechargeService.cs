@@ -46,7 +46,7 @@ public class MobilePhoneRechargeService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/mobilePhoneRecharges/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/mobilePhoneRecharges/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -98,7 +98,7 @@ public class MobilePhoneRechargeService : BaseService
         string provider,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/mobilePhoneRecharges/providers/{provider}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/mobilePhoneRecharges/providers/{PathSegment.Escape(provider)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -115,7 +115,7 @@ public class MobilePhoneRechargeService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/mobilePhoneRecharges/{id}/cancel");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/mobilePhoneRecharges/{PathSegment.Escape(id)}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }

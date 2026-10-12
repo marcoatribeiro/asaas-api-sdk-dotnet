@@ -46,7 +46,7 @@ public class CreditBureauReportService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/creditBureauReport/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/creditBureauReport/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }

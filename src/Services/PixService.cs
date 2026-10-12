@@ -74,9 +74,7 @@ public class PixService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/addressKeys/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/addressKeys/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PixAddressKeyGetResponseDto>(request, cancellationToken);
     }
@@ -88,9 +86,7 @@ public class PixService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/pix/addressKeys/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/pix/addressKeys/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PixAddressKeyGetResponseDto>(request, cancellationToken);
     }
@@ -125,7 +121,7 @@ public class PixService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/qrCodes/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/qrCodes/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -137,9 +133,7 @@ public class PixService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/pix/qrCodes/static/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/pix/qrCodes/static/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PixQrCodeDeleteResponseDto>(request, cancellationToken);
     }

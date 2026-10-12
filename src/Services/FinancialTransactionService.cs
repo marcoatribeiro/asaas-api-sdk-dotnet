@@ -61,7 +61,7 @@ public class FinancialTransactionService : BaseService
             throw new ValidationException("Financial transaction ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/financialTransactions/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/financialTransactions/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<FinancialTransactionGetResponseDto>(request, cancellationToken);
     }

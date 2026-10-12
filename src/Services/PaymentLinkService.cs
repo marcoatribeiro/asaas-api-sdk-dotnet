@@ -61,9 +61,7 @@ public class PaymentLinkService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentLinkGetResponseDto>(request, cancellationToken);
     }
@@ -92,10 +90,9 @@ public class PaymentLinkService : BaseService
         PaymentLinkUpdateRequestDto paymentLink,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
         ArgumentNullException.ThrowIfNull(paymentLink);
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/paymentLinks/{Uri.EscapeDataString(id)}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/paymentLinks/{PathSegment.Escape(id)}")
             .SetBody(paymentLink);
 
         using var request = requestBuilder.Build(GetBaseUrl());
@@ -109,9 +106,7 @@ public class PaymentLinkService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/paymentLinks/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/paymentLinks/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentLinkDeleteResponseDto>(request, cancellationToken);
     }
@@ -123,9 +118,7 @@ public class PaymentLinkService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{Uri.EscapeDataString(id)}/images");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{PathSegment.Escape(id)}/images");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentLinkFileListResponseDto>(request, cancellationToken);
     }
@@ -144,7 +137,7 @@ public class PaymentLinkService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{id}/files");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentLinks/{PathSegment.Escape(id)}/files");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -170,7 +163,7 @@ public class PaymentLinkService : BaseService
         bool? main = null,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        var idSegment = PathSegment.Escape(id);
         ArgumentNullException.ThrowIfNull(image);
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
         ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
@@ -182,7 +175,7 @@ public class PaymentLinkService : BaseService
         content.Add(imageContent, "image", fileName);
         content.AddField("main", main);
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentLinks/{Uri.EscapeDataString(id)}/images")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentLinks/{idSegment}/images")
             .SetMultipartContent(content);
 
         using var request = requestBuilder.Build(GetBaseUrl());
@@ -203,7 +196,7 @@ public class PaymentLinkService : BaseService
         object file,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentLinks/{id}/files")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentLinks/{PathSegment.Escape(id)}/files")
             .SetBody(file);
 
         var request = requestBuilder.Build(GetBaseUrl());

@@ -46,7 +46,7 @@ public class AnticipationService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/anticipations/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/anticipations/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }

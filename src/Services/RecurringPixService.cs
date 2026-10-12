@@ -60,9 +60,7 @@ public class RecurringPixService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurrings/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurrings/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PixRecurringTransactionGetResponseDto>(request, cancellationToken);
     }
@@ -76,9 +74,7 @@ public class RecurringPixService : BaseService
         long? limit = null,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurrings/{Uri.EscapeDataString(id)}/items")
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurrings/{PathSegment.Escape(id)}/items")
             .AddQueryParam("offset", offset)
             .AddQueryParam("limit", limit);
 
@@ -101,7 +97,7 @@ public class RecurringPixService : BaseService
         string itemId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurring/{id}/items/{itemId}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/pix/transactions/recurring/{PathSegment.Escape(id)}/items/{PathSegment.Escape(itemId)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -114,9 +110,7 @@ public class RecurringPixService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/recurrings/{Uri.EscapeDataString(id)}/cancel");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/recurrings/{PathSegment.Escape(id)}/cancel");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PixRecurringTransactionGetResponseDto>(request, cancellationToken);
     }
@@ -132,9 +126,7 @@ public class RecurringPixService : BaseService
         string itemId,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(itemId);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/recurrings/items/{Uri.EscapeDataString(itemId)}/cancel");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/pix/transactions/recurrings/items/{PathSegment.Escape(itemId)}/cancel");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PixRecurringTransactionItemGetResponseDto>(request, cancellationToken);
     }

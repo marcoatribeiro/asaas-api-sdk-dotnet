@@ -44,7 +44,7 @@ public class CreditCardService : BaseService
         string token,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/creditCard/{token}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/creditCard/{PathSegment.Escape(token)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -56,7 +56,7 @@ public class CreditCardService : BaseService
         string token,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/creditCard/{token}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/creditCard/{PathSegment.Escape(token)}");
         var request = requestBuilder.Build(GetBaseUrl());
         await ExecuteAsync(request, cancellationToken);
     }

@@ -46,7 +46,7 @@ public class PaymentDunningService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -101,7 +101,7 @@ public class PaymentDunningService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{id}/history");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{PathSegment.Escape(id)}/history");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -118,7 +118,7 @@ public class PaymentDunningService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{id}/partialPayments");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentDunnings/{PathSegment.Escape(id)}/partialPayments");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -154,7 +154,7 @@ public class PaymentDunningService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentDunnings/{id}/cancel");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentDunnings/{PathSegment.Escape(id)}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }

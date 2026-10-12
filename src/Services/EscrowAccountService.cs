@@ -62,7 +62,7 @@ public class EscrowAccountService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentEscrowAccount/items/{paymentId}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentEscrowAccount/items/{PathSegment.Escape(paymentId)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -79,7 +79,7 @@ public class EscrowAccountService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentEscrowAccount/items/{paymentId}/cancel");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentEscrowAccount/items/{PathSegment.Escape(paymentId)}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -96,7 +96,7 @@ public class EscrowAccountService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentEscrowAccount/items/{paymentId}/release");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentEscrowAccount/items/{PathSegment.Escape(paymentId)}/release");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }

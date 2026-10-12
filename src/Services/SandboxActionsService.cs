@@ -21,7 +21,7 @@ public class SandboxActionsService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/receiveInCash");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{PathSegment.Escape(paymentId)}/receiveInCash");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
@@ -33,7 +33,7 @@ public class SandboxActionsService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/confirm");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{PathSegment.Escape(paymentId)}/confirm");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
@@ -45,7 +45,7 @@ public class SandboxActionsService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/refund");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{PathSegment.Escape(paymentId)}/refund");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
@@ -57,7 +57,7 @@ public class SandboxActionsService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/chargeback");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{PathSegment.Escape(paymentId)}/chargeback");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
@@ -88,7 +88,7 @@ public class SandboxActionsService : BaseService
         string transferId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/transfers/{transferId}/done");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/transfers/{PathSegment.Escape(transferId)}/done");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<TransferGetResponseDto>(request, cancellationToken);
     }
@@ -100,7 +100,7 @@ public class SandboxActionsService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{paymentId}/overdue");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/sandbox/payments/{PathSegment.Escape(paymentId)}/overdue");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }

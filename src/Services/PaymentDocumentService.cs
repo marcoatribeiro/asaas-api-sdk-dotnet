@@ -26,7 +26,7 @@ public class PaymentDocumentService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{paymentId}/documents");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(paymentId)}/documents");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -58,7 +58,7 @@ public class PaymentDocumentService : BaseService
         string type,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(paymentId);
+        var paymentIdSegment = PathSegment.Escape(paymentId);
         ArgumentNullException.ThrowIfNull(file);
         ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
         ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
@@ -72,7 +72,7 @@ public class PaymentDocumentService : BaseService
         content.AddField("availableAfterPayment", availableAfterPayment);
         content.AddField("type", type);
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{Uri.EscapeDataString(paymentId)}/documents")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{paymentIdSegment}/documents")
             .SetMultipartContent(content);
 
         using var request = requestBuilder.Build(GetBaseUrl());
@@ -93,7 +93,7 @@ public class PaymentDocumentService : BaseService
         object document,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{paymentId}/documents")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{PathSegment.Escape(paymentId)}/documents")
             .SetBody(document);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -114,7 +114,7 @@ public class PaymentDocumentService : BaseService
         object document,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/payments/{paymentId}/documents/{documentId}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/payments/{PathSegment.Escape(paymentId)}/documents/{PathSegment.Escape(documentId)}")
             .SetBody(document);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -129,7 +129,7 @@ public class PaymentDocumentService : BaseService
         string documentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/payments/{paymentId}/documents/{documentId}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/payments/{PathSegment.Escape(paymentId)}/documents/{PathSegment.Escape(documentId)}");
         var request = requestBuilder.Build(GetBaseUrl());
         await ExecuteAsync(request, cancellationToken);
     }

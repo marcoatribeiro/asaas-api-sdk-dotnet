@@ -37,9 +37,7 @@ public class InstallmentService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/installments/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/installments/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<InstallmentGetResponseDto>(request, cancellationToken);
     }
@@ -67,9 +65,7 @@ public class InstallmentService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/installments/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/installments/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<InstallmentDeleteResponseDto>(request, cancellationToken);
     }
@@ -85,9 +81,7 @@ public class InstallmentService : BaseService
         string? status = null,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/installments/{Uri.EscapeDataString(id)}/payments")
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/installments/{PathSegment.Escape(id)}/payments")
             .AddQueryParam("status", status);
 
         using var request = requestBuilder.Build(GetBaseUrl());

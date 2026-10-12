@@ -37,7 +37,7 @@ public class InvoiceService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/invoices/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/invoices/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<InvoiceGetResponseDto>(request, cancellationToken);
     }
@@ -64,7 +64,7 @@ public class InvoiceService : BaseService
         InvoiceUpdateRequestDto invoice,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/invoices/{id}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/invoices/{PathSegment.Escape(id)}")
             .SetBody(invoice);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -79,7 +79,7 @@ public class InvoiceService : BaseService
         InvoiceCancelRequestDto? reason = null,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/invoices/{id}/cancel");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/invoices/{PathSegment.Escape(id)}/cancel");
         
         if (reason != null)
         {
@@ -97,7 +97,7 @@ public class InvoiceService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/invoices/{id}/authorize");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/invoices/{PathSegment.Escape(id)}/authorize");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<InvoiceGetResponseDto>(request, cancellationToken);
     }

@@ -46,7 +46,7 @@ public class PaymentSplitService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentSplits/{paymentId}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/paymentSplits/{PathSegment.Escape(paymentId)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -64,7 +64,7 @@ public class PaymentSplitService : BaseService
         object split,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentSplits/{paymentId}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentSplits/{PathSegment.Escape(paymentId)}")
             .SetBody(split);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -78,7 +78,7 @@ public class PaymentSplitService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/paymentSplits/{paymentId}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/paymentSplits/{PathSegment.Escape(paymentId)}");
         var request = requestBuilder.Build(GetBaseUrl());
         await ExecuteAsync(request, cancellationToken);
     }

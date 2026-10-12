@@ -26,6 +26,7 @@ API pública de integração com a plataforma Asaas.
 - [Setting a Custom Timeout](#setting-a-custom-timeout)
 - [Sample Usage](#sample-usage)
 - [Response types](#response-types)
+- [Identifiers](#identifiers)
 - [Services](#services)
 - [Models](#models)
 - [License](#license)
@@ -182,6 +183,13 @@ Most services return typed DTOs (for example `PaymentGetResponseDto`, `Subscript
 still return `dynamic` give a boxed `System.Text.Json.JsonElement`: read a field with
 `((JsonElement)result).GetProperty("id").GetString()`, because `result.id` throws a `RuntimeBinderException`. See
 [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md#reading-responses).
+
+## Identifiers
+
+Pass identifiers (payment, customer, token, provider, ...) exactly as the Asaas returned them. The SDK percent-encodes each
+one as a single path segment, so `/`, `?`, `#`, `%` and spaces stay inside it and cannot change the route; do not encode
+them yourself, or `%` will be encoded twice. A null, blank, `.` or `..` identifier is rejected before any request is sent
+(`ArgumentException`, or `ValidationException` where a service already threw it for a missing identifier).
 
 ## Services
 

@@ -26,7 +26,7 @@ public class PaymentRefundService : BaseService
         object refundData,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{paymentId}/refund")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{PathSegment.Escape(paymentId)}/refund")
             .SetBody(refundData);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -45,7 +45,7 @@ public class PaymentRefundService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{paymentId}/status");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(paymentId)}/status");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }

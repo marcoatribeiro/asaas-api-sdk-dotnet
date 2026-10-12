@@ -65,9 +65,7 @@ public class SubscriptionService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/subscriptions/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/subscriptions/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<SubscriptionGetResponseDto>(request, cancellationToken);
     }
@@ -96,10 +94,9 @@ public class SubscriptionService : BaseService
         SubscriptionUpdateRequestDto subscription,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
         ArgumentNullException.ThrowIfNull(subscription);
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/subscriptions/{Uri.EscapeDataString(id)}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/subscriptions/{PathSegment.Escape(id)}")
             .SetBody(subscription);
 
         using var request = requestBuilder.Build(GetBaseUrl());
@@ -113,9 +110,7 @@ public class SubscriptionService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/subscriptions/{Uri.EscapeDataString(id)}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/subscriptions/{PathSegment.Escape(id)}");
         using var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<SubscriptionDeleteResponseDto>(request, cancellationToken);
     }
@@ -135,9 +130,7 @@ public class SubscriptionService : BaseService
         string? status = null,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(id);
-
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/subscriptions/{Uri.EscapeDataString(id)}/payments")
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/subscriptions/{PathSegment.Escape(id)}/payments")
             .AddQueryParam("offset", offset)
             .AddQueryParam("limit", limit)
             .AddQueryParam("status", status);

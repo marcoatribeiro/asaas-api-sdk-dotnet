@@ -25,7 +25,7 @@ public class NotificationService : BaseService
         string paymentId,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{paymentId}/notifications");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(paymentId)}/notifications");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -42,7 +42,7 @@ public class NotificationService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/notifications/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/notifications/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -60,7 +60,7 @@ public class NotificationService : BaseService
         object notification,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/notifications/{id}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/notifications/{PathSegment.Escape(id)}")
             .SetBody(notification);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -80,7 +80,7 @@ public class NotificationService : BaseService
         object notifications,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/payments/{paymentId}/notifications/batch")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/payments/{PathSegment.Escape(paymentId)}/notifications/batch")
             .SetBody(notifications);
 
         var request = requestBuilder.Build(GetBaseUrl());

@@ -70,7 +70,7 @@ public class CustomerService : BaseService
             throw new ValidationException("Customer ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/customers/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/customers/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<CustomerGetResponseDto>(request, cancellationToken);
     }
@@ -119,7 +119,7 @@ public class CustomerService : BaseService
             throw new ValidationException("Customer data is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/customers/{id}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/customers/{PathSegment.Escape(id)}")
             .SetJsonContent(customerUpdateRequestDto);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -141,7 +141,7 @@ public class CustomerService : BaseService
             throw new ValidationException("Customer ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/customers/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/customers/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<CustomerDeleteResponseDto>(request, cancellationToken);
     }
@@ -161,7 +161,7 @@ public class CustomerService : BaseService
             throw new ValidationException("Customer ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/customers/{id}/restore")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/customers/{PathSegment.Escape(id)}/restore")
             .SetJsonContent(new { });
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -183,7 +183,7 @@ public class CustomerService : BaseService
             throw new ValidationException("Customer ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/customers/{id}/notifications");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/customers/{PathSegment.Escape(id)}/notifications");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<NotificationListResponseDto>(request, cancellationToken);
     }

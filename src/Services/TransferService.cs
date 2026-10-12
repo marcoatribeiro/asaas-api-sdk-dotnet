@@ -55,7 +55,7 @@ public class TransferService : BaseService
             throw new ValidationException("Transfer ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/transfers/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/transfers/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<TransferGetResponseDto>(request, cancellationToken);
     }
@@ -140,7 +140,7 @@ public class TransferService : BaseService
             throw new ValidationException("Transfer ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/transfers/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/transfers/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<TransferDeleteResponseDto>(request, cancellationToken);
     }

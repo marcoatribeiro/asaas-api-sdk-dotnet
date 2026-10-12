@@ -44,7 +44,7 @@ public class CheckoutService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/checkout/sessions/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/checkout/sessions/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }

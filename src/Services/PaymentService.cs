@@ -64,7 +64,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
@@ -123,7 +123,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment data is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/payments/{id}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/payments/{PathSegment.Escape(id)}")
             .SetBody(payment);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -145,7 +145,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/payments/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Delete, $"v3/payments/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentDeleteResponseDto>(request, cancellationToken);
     }
@@ -187,7 +187,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{id}/captureAuthorizedPayment")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{PathSegment.Escape(id)}/captureAuthorizedPayment")
             .SetJsonContent(new { });
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -216,7 +216,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment request data is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{id}/payWithCreditCard")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{PathSegment.Escape(id)}/payWithCreditCard")
             .SetJsonContent(paymentRequest);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -238,7 +238,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/billingInfo");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(id)}/billingInfo");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentBillingInfoResponseDto>(request, cancellationToken);
     }
@@ -258,7 +258,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/viewingInfo");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(id)}/viewingInfo");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentViewingInfoResponseDto>(request, cancellationToken);
     }
@@ -278,7 +278,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentGetResponseDto>(request, cancellationToken);
     }
@@ -305,7 +305,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment data is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/payments/{id}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/payments/{PathSegment.Escape(id)}")
             .SetJsonContent(payment);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -327,7 +327,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{id}/restore")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{PathSegment.Escape(id)}/restore")
             .SetJsonContent(new { });
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -349,7 +349,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/status");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(id)}/status");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentStatusResponseDto>(request, cancellationToken);
     }
@@ -376,7 +376,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Refund request data is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{id}/refund")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{PathSegment.Escape(id)}/refund")
             .SetJsonContent(refundRequest);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -398,7 +398,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/identificationField");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(id)}/identificationField");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentIdentificationFieldResponseDto>(request, cancellationToken);
     }
@@ -418,7 +418,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/pixQrCode");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(id)}/pixQrCode");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentPixQrCodeResponseDto>(request, cancellationToken);
     }
@@ -445,7 +445,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Receipt request data is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{id}/receiveInCash")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{PathSegment.Escape(id)}/receiveInCash")
             .SetJsonContent(receiptRequest);
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -467,7 +467,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{id}/undoReceivedInCash")
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/payments/{PathSegment.Escape(id)}/undoReceivedInCash")
             .SetJsonContent(new { });
 
         var request = requestBuilder.Build(GetBaseUrl());
@@ -506,7 +506,7 @@ public class PaymentService : BaseService
             throw new ValidationException("Payment ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{id}/escrow");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/payments/{PathSegment.Escape(id)}/escrow");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<PaymentEscrowGetResponseDto>(request, cancellationToken);
     }

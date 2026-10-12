@@ -46,7 +46,7 @@ public class BillService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/bill/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/bill/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }
@@ -101,7 +101,7 @@ public class BillService : BaseService
         string id,
         CancellationToken cancellationToken = default)
     {
-        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/bill/{id}/cancel");
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/bill/{PathSegment.Escape(id)}/cancel");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<dynamic>(request, cancellationToken);
     }

@@ -77,7 +77,7 @@ public class SubaccountService : BaseService
             throw new ValidationException("Subaccount ID is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/accounts/{id}");
+        var requestBuilder = new RequestBuilder(HttpMethod.Get, $"v3/accounts/{PathSegment.Escape(id)}");
         var request = requestBuilder.Build(GetBaseUrl());
         return await ExecuteAsync<AccountGetResponseDto>(request, cancellationToken);
     }
@@ -171,7 +171,7 @@ public class SubaccountService : BaseService
             throw new ValidationException("Subaccount data is required");
         }
 
-        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/accounts/{id}")
+        var requestBuilder = new RequestBuilder(HttpMethod.Put, $"v3/accounts/{PathSegment.Escape(id)}")
             .SetBody(subaccount);
 
         var request = requestBuilder.Build(GetBaseUrl());
