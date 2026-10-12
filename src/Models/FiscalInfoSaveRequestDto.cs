@@ -92,7 +92,9 @@ public class FiscalInfoSaveRequestDto
     public string? AccessToken { get; set; }
 
     /// <summary>
-    /// File
+    /// Content of the digital certificate. Sent as the binary <c>certificateFile</c> part of the multipart request, with
+    /// the generic name <c>certificate.pfx</c>. To control the file name and content type, or to stream the file, use the
+    /// <c>Stream</c> overload of <c>FiscalInfoService.CreateAndUpdateTaxInformationAsync</c> instead.
     /// </summary>
     [JsonPropertyName("certificateFile")]
     public byte[]? CertificateFile { get; set; }
@@ -108,4 +110,12 @@ public class FiscalInfoSaveRequestDto
     /// </summary>
     [JsonPropertyName("nationalPortalTaxCalculationRegime")]
     public string? NationalPortalTaxCalculationRegime { get; set; }
+
+    /// <summary>
+    /// City in which the service is considered rendered when the invoice does not say so:
+    /// <c>MY_ACCOUNT_CITY</c>, <c>CUSTOMER_CITY</c> or <c>CUSTOMER_CITY_WHEN_ISS_IS_RETAINED</c>. When null the field is
+    /// not sent, so the value kept by the Asaas is not overwritten.
+    /// </summary>
+    [JsonPropertyName("serviceProvisionCityDefaultType")]
+    public string? ServiceProvisionCityDefaultType { get; set; }
 }

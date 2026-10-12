@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Asaas.Sdk.Config;
 using Asaas.Sdk.Http;
 
@@ -95,8 +96,49 @@ public class PaymentLinkService : BaseService
     }
 
     /// <summary>
+    /// Add an image to a payment link (<c>POST /v3/paymentLinks/{id}/images</c>, multipart/form-data).
+    /// </summary>
+    /// <remarks>
+    /// A payment link holds at most 5 images. The SDK does not know how many the link already has, so it does not check:
+    /// the Asaas rejects the upload beyond that.
+    /// </remarks>
+    /// <param name="id">Identifier of the payment link</param>
+    /// <param name="image">Content of the image. It is read once, and disposed together with the request.</param>
+    /// <param name="fileName">File name sent with the content</param>
+    /// <param name="contentType">Media type of the image (e.g. <c>image/png</c>)</param>
+    /// <param name="main">Whether this is the main image of the link. Omitted from the request when null.</param>
+    /// <param name="cancellationToken">Token that cancels the request</param>
+    public async Task<dynamic> AddPaymentLinkImageAsync(
+        string id,
+        Stream image,
+        string fileName,
+        string contentType,
+        bool? main = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        ArgumentNullException.ThrowIfNull(image);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(contentType);
+
+        using var content = new MultipartFormDataContent();
+
+        var imageContent = new StreamContent(image);
+        imageContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+        content.Add(imageContent, "image", fileName);
+        content.AddField("main", main);
+
+        var requestBuilder = new RequestBuilder(HttpMethod.Post, $"v3/paymentLinks/{Uri.EscapeDataString(id)}/images")
+            .SetMultipartContent(content);
+
+        using var request = requestBuilder.Build(GetBaseUrl());
+        return await ExecuteAsync<dynamic>(request, cancellationToken);
+    }
+
+    /// <summary>
     /// Upload a file to a payment link
     /// </summary>
+    [Obsolete("Sends JSON to a route the Asaas does not document. Use AddPaymentLinkImageAsync, which sends multipart/form-data to /images.")]
     public async Task<dynamic> UploadPaymentLinkFileAsync(
         string id,
         object file,
