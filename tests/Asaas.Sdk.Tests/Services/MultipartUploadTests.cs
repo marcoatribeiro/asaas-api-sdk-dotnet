@@ -232,5 +232,36 @@ public sealed class MultipartUploadTests
         Assert.All(streams, stream => Assert.True(stream.Disposed));
     }
 
+    [Theory]
+    [InlineData("IDENTIFICATION", new[] { "documentFile", "type" })]
+    [InlineData(null, new[] { "documentFile" })]
+    [InlineData(" ", new[] { "documentFile" })]
+    public async Task UploadAccountDocument_ShouldPostTheFile_AndTheTypeOnlyWhenGiven(string? type, string[] parts)
+    {
+        // Arrange
+        var handler = new CaptureHandler(responseBody: """{ "id": "file_1", "status": "PENDING" }""");
+        var service = new AccountDocumentService(new HttpClient(handler), Config());
+
+        // Act
+        var uploaded = await service.UploadAccountDocumentAsync(
+            "doc_1", new MemoryStream(FileBytes), "rg.pdf", "application/pdf", type, TestContext.Current.CancellationToken);
+
+        // Assert
+        Assert.Equal("file_1", uploaded.Id);
+        var request = Assert.Single(handler.Requests);
+        Assert.Equal(HttpMethod.Post, request.Method);
+        Assert.Equal("/v3/myAccount/documents/doc_1", request.Path);
+        Assert.Equal("multipart/form-data", request.MediaType);
+        Assert.Equal(parts, request.PartNames);
+        var file = request.File("documentFile");
+        Assert.Equal("rg.pdf", file.FileName);
+        Assert.Equal("application/pdf", file.ContentType);
+        Assert.Equal(FileBytes, file.Bytes);
+        if (parts.Contains("type"))
+        {
+            Assert.Equal(type, request.Text("type"));
+        }
+    }
+
     private static AsaasSdkConfig Config() => new() { BaseUrl = "https://api.example.invalid" };
 }

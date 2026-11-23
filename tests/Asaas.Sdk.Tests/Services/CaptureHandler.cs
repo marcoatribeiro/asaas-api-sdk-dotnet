@@ -86,7 +86,8 @@ internal sealed class CaptureHandler(HttpStatusCode status = HttpStatusCode.OK, 
         Requests.Add(captured);
         return new HttpResponseMessage(status)
         {
-            Content = new StringContent(responseBody, Encoding.UTF8, "application/json")
+            Content = new StringContent(responseBody, Encoding.UTF8, "application/json"),
+            RequestMessage = request // as the real handlers do
         };
     }
 }
