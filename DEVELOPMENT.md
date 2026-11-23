@@ -188,6 +188,10 @@ dotnet pack src/Asaas.Sdk/Asaas.Sdk.csproj --configuration Release --output ./pa
 dotnet nuget push ./packages/Asaas.Sdk.1.0.3.nupkg --api-key YOUR_API_KEY --source https://api.nuget.org/v3/index.json
 ```
 
+### Publishing from CI (Trusted Publishing)
+
+Releases go out through [.github/workflows/publish.yml](.github/workflows/publish.yml). The workflow runs when a GitHub Release is published. It does not use a stored API key. The `NuGet/login` action swaps the job's GitHub OIDC token for a nuget.org API key that lasts one hour. This works because of the Trusted Publishing policy on nuget.org (owner `marcoatribeiro`, repository `asaas-api-sdk-dotnet`, workflow file `publish.yml`). If you rename the workflow file, update the policy too.
+
 ### Version Management
 
 Update version in `src/Asaas.Sdk/Asaas.Sdk.csproj`:
